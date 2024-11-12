@@ -16,6 +16,11 @@ export const HeaderDrawer: React.FC<HeaderDrawerProps> = ({
     visible,
     onClose
 }) => {
+    // 添加菜单点击处理函数
+    const handleMenuClick = () => {
+        onClose();
+    };
+
     return (
         <Drawer
             title={null}
@@ -43,6 +48,7 @@ export const HeaderDrawer: React.FC<HeaderDrawerProps> = ({
                 mode="vertical"
                 items={menuItems}
                 className={styles.drawerMenu}
+                onClick={handleMenuClick}
             />
         </Drawer>
     );

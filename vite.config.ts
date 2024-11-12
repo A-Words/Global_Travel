@@ -17,5 +17,16 @@ export default defineConfig({
   },
   optimizeDeps: {
     include: ['three']
+  },
+  base: '/',
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          'vendor': ['react', 'react-dom', 'react-router-dom'],
+          'three': ['three']
+        }
+      }
+    }
   }
 });

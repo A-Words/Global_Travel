@@ -76,16 +76,22 @@ export const VRScene: FC<VRSceneProps> = ({ imageUrl, canvasRef }) => {
 
       // 添加场景事件监听
       sceneRef.current.onPointerObservable.add((pointerInfo) => {
-        if (pointerInfo.type === PointerEventTypes.POINTERMOVE && document.pointerLockElement) {
-          const event = pointerInfo.event as MouseEvent;
-          const deltaX = event.movementX * 0.0004;
-          const deltaY = event.movementY * 0.0004;
+        if (pointerInfo.type === PointerEventTypes.POINTERMOVE) {
+          const event = pointerInfo.event as PointerEvent;
           
-          camera.alpha = camera.alpha - deltaX;
-          camera.beta = Math.max(
-            camera.lowerBetaLimit ?? 0.1,
-            Math.min(camera.upperBetaLimit ?? Math.PI - 0.1, camera.beta - deltaY)
-          );
+          // 判断是否为触摸事件
+          const isTouchEvent = event.pointerType === 'touch';
+          const deltaX = event.movementX * (isTouchEvent ? 0.002 : 0.0004);
+          const deltaY = event.movementY * (isTouchEvent ? 0.002 : 0.0004);
+          
+          // 触摸事件不需要检查指针锁定
+          if (isTouchEvent || document.pointerLockElement) {
+            camera.alpha = camera.alpha - deltaX;
+            camera.beta = Math.max(
+              camera.lowerBetaLimit ?? 0.1,
+              Math.min(camera.upperBetaLimit ?? Math.PI - 0.1, camera.beta - deltaY)
+            );
+          }
         }
       });
 
@@ -157,6 +163,8 @@ export const VRScene: FC<VRSceneProps> = ({ imageUrl, canvasRef }) => {
         className={styles.vrCanvas}
         onMouseEnter={handleMouseEnter}
         onClick={handleCanvasClick}
+        onTouchStart={(e) => e.preventDefault()}
+        style={{ touchAction: 'none' }}
       />
     </>
   );

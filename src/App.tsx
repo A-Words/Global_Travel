@@ -10,6 +10,7 @@ import Login from './components/Login';
 import Register from './components/Register';
 import VirtualTour from './pages/VirtualTour';
 import ModelPreview from './pages/ModelPreview';
+import DebugPage from './pages/DebugPage';
 
 const { Content } = Layout;
 
@@ -59,6 +60,7 @@ const App: React.FC = () => {
                             <Route path="/register" element={<Register />} />
                             <Route path="/virtual-tour" element={<VirtualTour />} />
                             <Route path="/model-preview" element={<ModelPreview />} />
+                            <Route path="/debug" element={<DebugPage />} />
                         </Routes>
                     </Content>
                     <Button
