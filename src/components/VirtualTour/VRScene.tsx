@@ -9,7 +9,7 @@ interface VRSceneProps {
 }
 
 export const VRScene: FC<VRSceneProps> = ({ imageUrl, canvasRef }) => {
-  const [isFPSMode, setIsFPSMode] = useState(false);
+  const [setIsFPSMode] = useState(false);
   const engineRef = useRef<Engine | null>(null);
   const sceneRef = useRef<Scene | null>(null);
   const cameraRef = useRef<ArcRotateCamera | null>(null);
