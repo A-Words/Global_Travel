@@ -17,7 +17,7 @@ const tourSpots = [
 const VirtualTour: FC = () => {
   const [currentSpot, setCurrentSpot] = useState(tourSpots[0].value);
   const [isLoading, setIsLoading] = useState(false);
-  const [setIsFullscreen] = useState(false);
+  const [, setIsFullscreen] = useState(false);
   const sceneContainerRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
