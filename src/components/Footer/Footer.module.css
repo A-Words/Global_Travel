@@ -1,0 +1,111 @@
+/* Footer.module.css */
+/* 页脚样式模块，包含所有页脚相关组件的样式定义 */
+
+/* 基础布局样式 */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 48px;
+}
+
+.linksContainer {
+  display: flex;
+  justify-content: center;
+  margin: 0 -32px;
+}
+
+/* 响应式容器内边距 */
+@media (max-width: 576px) {
+  .container {
+    padding: 0 20px;
+  }
+  
+  .linksContainer {
+    margin: 0 -16px;
+  }
+}
+
+/* 页脚区块样式 */
+.section {
+  margin-bottom: 32px;
+  width: 100%;
+  max-width: 220px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* 链接列表样式 */
+.linkList {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+/* 链接样式 */
+.link {
+  color: var(--ant-color-text-secondary);
+  padding: 4px 0;
+  transition: all 0.3s;
+  text-align: center;
+}
+
+.link:hover {
+  color: var(--ant-color-primary);
+}
+
+/* 版权区域样式 */
+.copyright {
+  border-top: 1px solid var(--ant-color-border-secondary);
+  margin-top: 48px;
+  padding-top: 24px;
+  text-align: center;
+  color: var(--ant-color-text-secondary);
+}
+
+/* 移动端适配 */
+@media (max-width: 576px) {
+  .section {
+    margin-bottom: 24px;
+    text-align: center;
+  }
+  
+  .link {
+    font-size: 12px;
+    padding: 2px 0;
+  }
+  
+  .copyright {
+    margin-top: 32px;
+    padding-top: 16px;
+  }
+  
+  .linkList {
+    align-items: center;
+  }
+  
+  .section h5 {
+    text-align: center;
+    margin-bottom: 16px !important;
+  }
+}
+
+.footerCol {
+  display: flex;
+  justify-content: center;
+}
+
+@media (min-width: 768px) {
+  .section {
+    align-items: flex-start;
+  }
+  
+  .linkList {
+    align-items: flex-start;
+  }
+  
+  .link {
+    text-align: left;
+  }
+} 

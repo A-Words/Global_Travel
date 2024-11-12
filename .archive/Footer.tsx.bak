@@ -1,0 +1,71 @@
+import React from 'react';
+import { Layout, Row, Col, Typography, Space ,theme } from 'antd';
+import { Link } from 'react-router-dom';
+
+const { Footer: AntFooter } = Layout;
+const { Title, Text } = Typography;
+
+export const Footer: React.FC = () => {
+    const { token } = theme.useToken();
+    
+    const footerLinks = {
+        关于我们: ['公司介绍', '联系方式', '加入我们', '新闻中心'],
+        帮助中心: ['常见问题', '安全指南', '隐私政策', '用户协议'],
+        商务合作: ['景点合作', '广告投放', '战略合作', '品牌授权'],
+        关注我们: ['微信', '微博', '抖音', 'Instagram']
+    };
+
+    return (
+        <AntFooter style={{ background: token.colorBgLayout, padding: '70px 0 24px' }}>
+            <div style={{ maxWidth: 1200, margin: '0 auto', padding: '0 24px' }}>
+                <Row gutter={[64, 32]}>
+                    {Object.entries(footerLinks).map(([category, links]) => (
+                        <Col key={category} xs={24} sm={12} md={6}>
+                            <Title level={4} style={{ 
+                                marginBottom: token.marginLG,
+                                fontSize: token.fontSizeLG,
+                                color: token.colorTextHeading
+                            }}>
+                                {category}
+                            </Title>
+                            <Space direction="vertical" size={token.marginSM} style={{ display: 'flex' }}>
+                                {links.map((link) => (
+                                    <Link 
+                                        key={link} 
+                                        to="#" 
+                                        style={{ 
+                                            color: token.colorTextSecondary,
+                                            textDecoration: 'none',
+                                            fontSize: token.fontSize,
+                                            display: 'block',
+                                            padding: `${token.paddingXXS}px 0`,
+                                            transition: 'all 0.3s',
+                                        }}
+                                        onMouseEnter={(e) => {
+                                            e.currentTarget.style.color = token.colorPrimary;
+                                        }}
+                                        onMouseLeave={(e) => {
+                                            e.currentTarget.style.color = token.colorTextSecondary;
+                                        }}
+                                    >
+                                        {link}
+                                    </Link>
+                                ))}
+                            </Space>
+                        </Col>
+                    ))}
+                </Row>
+                <div style={{ 
+                    borderTop: `1px solid ${token.colorBorderSecondary}`,
+                    marginTop: token.marginXL,
+                    paddingTop: token.paddingLG,
+                    textAlign: 'center'
+                }}>
+                    <Text type="secondary" style={{ fontSize: token.fontSize }}>
+                        © 2024 TravelAR. All rights reserved.
+                    </Text>
+                </div>
+            </div>
+        </AntFooter>
+    );
+};

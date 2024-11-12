@@ -1,0 +1,82 @@
+/* 基础布局样式 */
+/* 确保移动端登录不会左右滚 */
+.ant-pro-form-login-container {
+  min-width: unset !important;
+}
+
+.ant-pro-form-login-main {
+  min-width: unset !important;
+  width: 100% !important;
+}
+
+.ant-pro-form-login {
+  min-width: unset !important;
+}
+
+/* 确保元素自适应换行 */
+.ant-space {
+  flex-wrap: wrap !important;
+}
+
+.ant-pro-form-login-other {
+  flex-wrap: wrap !important;
+}
+
+/* 登录图标样式 */
+.login-icon {
+  margin-inline-start: 16px;
+  font-size: 24px;
+  vertical-align: middle;
+  cursor: pointer;
+}
+
+/* 表单底部样式 */
+.form-footer {
+  margin-block-end: 24px;
+}
+
+.form-footer-right {
+  float: right;
+}
+
+/* 注册/登录切换区域 */
+.switch-form-container {
+  text-align: center;
+  margin-top: 16px;
+}
+
+/* 第三方登录图标样式 */
+.third-party-icon {
+  color: var(--ant-color-text-quaternary);
+  font-size: 24px;
+  margin-left: 16px;
+  cursor: pointer;
+  transition: color 0.3s;
+}
+
+.third-party-icon:hover {
+  color: var(--ant-primary-color);
+}
+
+/* 密码强度指示器样式 */
+.password-strength {
+  margin-top: 4px;
+  font-size: 14px;
+}
+
+.password-strength-weak {
+  color: var(--ant-error-color) !important;
+}
+
+.password-strength-medium {
+  color: var(--ant-warning-color) !important;
+}
+
+.password-strength-strong {
+  color: var(--ant-success-color) !important;
+}
+
+/* 表单前缀图标样式 */
+.prefixIcon {
+  color: var(--ant-color-text-quaternary);
+}

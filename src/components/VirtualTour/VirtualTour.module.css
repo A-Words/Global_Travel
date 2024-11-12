@@ -1,0 +1,80 @@
+.content {
+    padding: var(--spacing-md);
+    min-height: calc(100vh - var(--header-height) - var(--footer-height));
+    margin-top: var(--header-height);
+  }
+  
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--spacing-lg);
+  }
+  
+  .sceneContainer {
+    position: relative;
+    width: 100%;
+    height: 600px;
+    background: var(--ant-color-bg-container);
+    border-radius: var(--ant-border-radius-base);
+    overflow: hidden;
+  }
+  
+  .vrCanvas {
+    width: 100%;
+    height: 100%;
+    touch-action: none;
+  }
+  
+  .loading {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--spacing-sm);
+    color: var(--ant-color-text-secondary);
+  }
+  
+  .loading .anticon {
+    font-size: 32px;
+  }
+  
+  @media (max-width: 768px) {
+    .content {
+      padding: var(--spacing-sm);
+    }
+    
+    .header {
+      flex-direction: column;
+      gap: var(--spacing-md);
+    }
+    
+    .header :global(.ant-space) {
+      width: 100%;
+      flex-direction: column;
+    }
+    
+    .header :global(.ant-select),
+    .header :global(.ant-btn) {
+      width: 100%;
+    }
+    
+    .sceneContainer {
+      height: 400px;
+    }
+  }
+  
+  .lightMessage :global(.ant-message-notice-content) {
+    border: 1px solid var(--ant-color-border);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  }
+  
+  .darkMessage :global(.ant-message-notice-content) {
+    background: var(--ant-color-bg-container);
+    color: var(--ant-color-text);
+    border: 1px solid var(--ant-color-border);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.85);
+  }

@@ -1,0 +1,93 @@
+/* 引入 Ant Design 的基础样式 */
+@import 'antd/dist/reset.css';
+
+/* 全局样式重置 */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* 基础布局 */
+html, body {
+  height: 100%;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial,
+    'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol',
+    'Noto Color Emoji';
+  font-size: var(--ant-font-size-base);
+  line-height: 1.5715;
+  scroll-behavior: smooth;
+}
+
+#root {
+  height: 100%;
+}
+
+/* Ant Design Layout 相关样式 */
+.ant-layout {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+  background: var(--ant-color-bg-layout);
+}
+
+.ant-layout-header {
+  height: var(--ant-header-height);
+  padding: 0 50px;
+  color: var(--ant-color-text);
+  line-height: var(--ant-header-height);
+  background: var(--ant-color-bg-container);
+}
+
+.ant-layout-content {
+  flex: auto;
+  min-height: 0;
+}
+
+.ant-layout-footer {
+  padding: var(--ant-padding-lg) var(--ant-padding-lg);
+  color: var(--ant-color-text);
+  font-size: var(--ant-font-size-base);
+  background: var(--ant-color-bg-layout);
+}
+
+/* 响应式布局 */
+@media screen and (max-width: 768px) {
+  .ant-layout-header {
+    padding: 0 20px;
+  }
+
+  .ant-layout-content {
+    /* 移除默认内边距 */
+    padding: 0;
+  }
+
+  .ant-layout-footer {
+    padding: 20px;
+  }
+}
+
+:root {
+  /* 布局相关 */
+  --max-content-width: 1200px;
+  --header-height: 64px;
+  --footer-height: 70px;
+  
+  /* 间距 */
+  --spacing-xs: 8px;
+  --spacing-sm: 16px;
+  --spacing-md: 24px;
+  --spacing-lg: 32px;
+  --spacing-xl: 48px;
+  
+  /* 断点 */
+  --breakpoint-xs: 576px;
+  --breakpoint-sm: 768px;
+  --breakpoint-md: 992px;
+  --breakpoint-lg: 1200px;
+  
+  /* 动画 */
+  --transition-fast: 0.2s;
+  --transition-base: 0.3s;
+  --transition-slow: 0.4s;
+}

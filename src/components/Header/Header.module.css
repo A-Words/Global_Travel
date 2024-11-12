@@ -1,0 +1,113 @@
+/* --------------------------------- */
+/* Header 基础样式                    */
+/* --------------------------------- */
+
+/* 头部容器样式 */
+.container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    height: 64px;
+    padding: 0 24px;
+    background: var(--ant-color-bg-container);
+    border-bottom: 1px solid var(--ant-color-border-secondary);
+}
+
+/* --------------------------------- */
+/* Logo 相关样式                      */
+/* --------------------------------- */
+
+/* 默认 Logo 样式 */
+.logo {
+    font-size: 20px;
+    font-weight: bold;
+    color: var(--ant-color-primary);
+}
+
+/* 移动端 Logo 样式 */
+.mobileLogo {
+    font-size: 20px;
+    font-weight: bold;
+    color: var(--ant-color-primary);
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+/* --------------------------------- */
+/* 导航菜单样式                       */
+/* --------------------------------- */
+
+/* 主导航菜单样式 */
+.menu {
+    flex: 1;
+    border-bottom: none;
+    justify-content: center;
+}
+
+/* --------------------------------- */
+/* 移动端相关样式                     */
+/* --------------------------------- */
+
+/* 移动端头部容器 */
+.mobileHeader {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+/* 移动端菜单按钮 */
+.mobileMenuButton {
+    width: 48px;
+    height: 48px;
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* --------------------------------- */
+/* 抽屉菜单相关样式                   */
+/* --------------------------------- */
+
+/* 抽屉头部容器 */
+.drawerHeader {
+    height: 64px;
+    display: flex;
+    align-items: center;
+    padding: 0 24px;
+    border-bottom: 1px solid var(--ant-color-border-secondary);
+    position: relative;
+}
+
+/* 抽屉关闭按钮 */
+.drawerCloseButton {
+    width: 48px;
+    height: 48px;
+    font-size: 20px;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    left: 44px;
+}
+
+/* 抽屉标题 */
+.drawerTitle {
+    font-size: var(--ant-font-size-lg);
+    font-weight: var(--ant-font-weight-strong);
+    color: var(--ant-color-text-heading);
+    margin: 0 auto;
+}
+
+/* 抽屉菜单 */
+.drawerMenu {
+    border: none;
+    background: transparent;
+    padding: var(--ant-padding) 0;
+} 
