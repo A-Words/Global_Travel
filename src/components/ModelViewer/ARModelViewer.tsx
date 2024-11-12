@@ -80,7 +80,7 @@ const ARModelViewer: React.FC<ARModelViewerProps> = ({ modelUrl }) => {
         currentSession = session;
         
         // 设置 XR 动画循环
-        renderer.setAnimationLoop((timestamp, frame) => {
+        renderer.setAnimationLoop((frame) => {
           if (!frame) return;
 
           const referenceSpace = renderer.xr.getReferenceSpace();
