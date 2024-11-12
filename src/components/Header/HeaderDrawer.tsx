@@ -14,8 +14,7 @@ interface HeaderDrawerProps {
 // 移动端抽屉菜单组件
 export const HeaderDrawer: React.FC<HeaderDrawerProps> = ({
     visible,
-    onClose,
-    onOpenModal
+    onClose
 }) => {
     return (
         <Drawer

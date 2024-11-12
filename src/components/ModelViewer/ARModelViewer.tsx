@@ -116,20 +116,6 @@ const ARModelViewer: React.FC<ARModelViewerProps> = ({ modelUrl }) => {
     };
   }, [modelUrl]);
 
-  // 添加手势控制
-  const handleTouchMove = (event: TouchEvent) => {
-    if (event.touches.length === 2) {
-      // 处理缩放
-      const touch1 = event.touches[0];
-      const touch2 = event.touches[1];
-      const dist = Math.hypot(
-        touch1.pageX - touch2.pageX,
-        touch1.pageY - touch2.pageY
-      );
-      // 根据距离调整模型大小
-    }
-  };
-
   // 添加 AR 放置指引
   return (
     <div ref={containerRef} style={{ width: '100%', height: '100%' }}>
