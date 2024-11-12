@@ -9,4 +9,13 @@ export default defineConfig({
       '/register': 'http://localhost:3000',
     },
   },
+  resolve: {
+    alias: {
+      'three': 'three',
+      'three/examples/jsm': 'three/examples/jsm'
+    }
+  },
+  optimizeDeps: {
+    include: ['three']
+  }
 });

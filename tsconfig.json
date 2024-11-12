@@ -10,6 +10,12 @@
     "strict": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true
+    "forceConsistentCasingInFileNames": true,
+    "lib": ["dom", "dom.iterable", "esnext", "webxr"],
+    "moduleResolution": "node",
+    "allowJs": true,
+    "paths": {
+      "three/examples/jsm/*": ["./node_modules/three/examples/jsm/*"]
+    }
   }
 }

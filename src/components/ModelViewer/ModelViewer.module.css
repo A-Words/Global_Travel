@@ -1,0 +1,59 @@
+.modelViewer {
+  width: 100%;
+}
+
+.viewerContainer {
+  position: relative;
+  height: 400px;
+  background: var(--ant-color-bg-layout);
+  border-radius: var(--ant-border-radius-lg);
+  overflow: hidden;
+}
+
+.controls {
+  position: absolute;
+  bottom: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--ant-color-bg-container);
+  padding: 8px;
+  border-radius: var(--ant-border-radius-sm);
+  box-shadow: var(--ant-box-shadow);
+  z-index: 1000;
+}
+
+.viewerContainer canvas {
+  background: var(--ant-color-bg-layout);
+  width: 100% !important;
+  height: 100% !important;
+}
+
+@media (max-width: 576px) {
+  .viewerContainer {
+    height: 300px;
+  }
+}
+
+/* Tooltip 样式 */
+.tooltip {
+  z-index: 1001;
+}
+
+:global(.ant-tooltip) {
+  --antd-arrow-background-color: rgba(0, 0, 0, 0.85);
+}
+
+:global(.ant-tooltip-inner) {
+  min-height: 32px;
+  padding: 6px 12px;
+  color: #fff;
+  font-size: 14px;
+  line-height: 1.4;
+  background: rgba(0, 0, 0, 0.85);
+  border-radius: 4px;
+  box-shadow: 0 3px 6px -4px rgba(0, 0, 0, 0.12);
+}
+
+:global(.ant-tooltip-arrow-content) {
+  background: rgba(0, 0, 0, 0.85);
+}

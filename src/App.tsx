@@ -9,6 +9,7 @@ import Home from './pages/Home';
 import Login from './components/Login';
 import Register from './components/Register';
 import VirtualTour from './pages/VirtualTour';
+import ModelPreview from './pages/ModelPreview';
 
 const { Content } = Layout;
 
@@ -57,6 +58,7 @@ const App: React.FC = () => {
                             <Route path="/login" element={<Login />} />
                             <Route path="/register" element={<Register />} />
                             <Route path="/virtual-tour" element={<VirtualTour />} />
+                            <Route path="/model-preview" element={<ModelPreview />} />
                         </Routes>
                     </Content>
                     <Button

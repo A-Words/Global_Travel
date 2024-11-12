@@ -14,7 +14,8 @@ interface HeaderDrawerProps {
 // 移动端抽屉菜单组件
 export const HeaderDrawer: React.FC<HeaderDrawerProps> = ({
     visible,
-    onClose
+    onClose,
+    onOpenModal
 }) => {
     return (
         <Drawer
@@ -22,7 +23,11 @@ export const HeaderDrawer: React.FC<HeaderDrawerProps> = ({
             placement="left"
             onClose={onClose}
             open={visible}
-            bodyStyle={{ padding: 0 }}
+            styles={{
+                body: {
+                    padding: 0
+                }
+            }}
             width={280}
             closable={false}
         >
