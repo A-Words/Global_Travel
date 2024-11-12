@@ -162,51 +162,31 @@ const ModelViewer: React.FC<ModelViewerProps> = ({ modelUrl, title }) => {
             </Canvas>
           )}
           <div className={styles.controls}>
-            <Space>
-              <Tooltip 
-                title="放大" 
-                placement="top" 
-                mouseEnterDelay={0.1}
-                color="rgba(0, 0, 0, 0.85)"
-              >
+            <Space size={8}>
+              <Tooltip title="放大" placement="top">
                 <Button 
-                  type="text"
+                  type="default"
                   icon={<ZoomInOutlined />} 
                   onClick={handleZoomIn}
                 />
               </Tooltip>
-              <Tooltip 
-                title="缩小" 
-                placement="top" 
-                mouseEnterDelay={0.1}
-                color="rgba(0, 0, 0, 0.85)"
-              >
+              <Tooltip title="缩小" placement="top">
                 <Button 
-                  type="text"
+                  type="default"
                   icon={<ZoomOutOutlined />} 
                   onClick={handleZoomOut}
                 />
               </Tooltip>
-              <Tooltip 
-                title="旋转" 
-                placement="top" 
-                mouseEnterDelay={0.1}
-                color="rgba(0, 0, 0, 0.85)"
-              >
+              <Tooltip title="旋转" placement="top">
                 <Button 
-                  type="text"
+                  type="default"
                   icon={<RotateRightOutlined />} 
                   onClick={handleRotate}
                 />
               </Tooltip>
-              <Tooltip 
-                title={isFullscreen ? "退出全屏" : "全屏"} 
-                placement="top" 
-                mouseEnterDelay={0.1}
-                color="rgba(0, 0, 0, 0.85)"
-              >
+              <Tooltip title={isFullscreen ? "退出全屏" : "全屏"} placement="top">
                 <Button 
-                  type="text"
+                  type="default"
                   icon={<FullscreenOutlined />} 
                   onClick={toggleFullscreen}
                 />
