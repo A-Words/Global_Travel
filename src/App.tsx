@@ -1,16 +1,17 @@
-import React, { useState, useEffect } from 'react';
-import { ConfigProvider, Button, Layout } from 'antd';
-import { BulbOutlined, BulbFilled } from '@ant-design/icons';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { defaultTheme, getDarkTheme } from './theme';
-import { Header } from './components/Header';
-import { Footer } from './components/Footer';
+import React, {useEffect, useState} from 'react';
+import {Button, ConfigProvider, Layout} from 'antd';
+import {BulbFilled, BulbOutlined} from '@ant-design/icons';
+import {BrowserRouter as Router, Route, Routes} from 'react-router-dom';
+import {defaultTheme, getDarkTheme} from './theme';
+import {Header} from './components/Header';
+import {Footer} from './components/Footer';
 import Home from './pages/Home';
 import Login from './components/Login';
 import Register from './components/Register';
 import VirtualTour from './pages/VirtualTour';
 import ModelPreview from './pages/ModelPreview';
 import DebugPage from './pages/DebugPage';
+import Destinations from './pages/Destinations';
 
 const { Content } = Layout;
 
@@ -61,6 +62,7 @@ const App: React.FC = () => {
                             <Route path="/virtual-tour" element={<VirtualTour />} />
                             <Route path="/model-preview" element={<ModelPreview />} />
                             <Route path="/debug" element={<DebugPage />} />
+                            <Route path="/destinations" element={<Destinations/>}/>
                         </Routes>
                     </Content>
                     <Button

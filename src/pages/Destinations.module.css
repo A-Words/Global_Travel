@@ -1,0 +1,53 @@
+.container {
+    padding: 24px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.pageTitle {
+    text-align: center;
+    margin-bottom: var(--spacing-xl) !important;
+}
+
+.searchSection {
+    margin-bottom: var(--spacing-lg);
+}
+
+.cardImage {
+    height: 200px;
+    background-size: cover;
+    background-position: center;
+    transition: transform 0.3s ease;
+}
+
+.card {
+    height: 100%;
+    overflow: hidden;
+}
+
+.card:hover .cardImage {
+    transform: scale(1.1);
+}
+
+.cardMeta {
+    padding: var(--spacing-sm) 0;
+}
+
+.location {
+    color: var(--ant-color-text-secondary);
+    margin-bottom: var(--spacing-xs);
+}
+
+.description {
+    margin-top: var(--spacing-xs);
+}
+
+.loadingContainer {
+    text-align: center;
+    padding: var(--spacing-xl) 0;
+}
+
+.errorContainer {
+    text-align: center;
+    padding: var(--spacing-xl);
+} 
