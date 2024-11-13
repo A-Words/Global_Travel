@@ -1,0 +1,30 @@
+.container {
+    padding: 24px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.loadingContainer,
+.errorContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 400px;
+}
+
+.backButton {
+    margin-bottom: 16px;
+}
+
+.coverImage {
+    height: 400px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+@media (max-width: 768px) {
+    .coverImage {
+        height: 250px;
+    }
+}

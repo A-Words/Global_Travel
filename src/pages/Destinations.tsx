@@ -76,6 +76,7 @@ const Destinations: React.FC = () => {
                             <Card
                                 hoverable
                                 className={styles.card}
+                                onClick={() => navigate(`/heritage/${heritage.id}`)}
                                 cover={
                                     <div
                                         className={styles.cardImage}

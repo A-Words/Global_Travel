@@ -11,8 +11,10 @@ interface HeritageState {
         searchText: string;
     };
     filteredHeritages: Heritage[];
+    selectedHeritage: Heritage | null;
     fetchHeritages: () => Promise<void>;
     setFilters: (filters: Partial<HeritageState['filters']>) => void;
+    selectHeritage: (id: string) => Promise<void>;
 }
 
 export const useHeritageStore = create<HeritageState>((set, get) => ({
@@ -24,6 +26,7 @@ export const useHeritageStore = create<HeritageState>((set, get) => ({
         searchText: '',
     },
     filteredHeritages: [],
+    selectedHeritage: null,
     fetchHeritages: async () => {
         set({loading: true});
         try {
@@ -65,4 +68,20 @@ export const useHeritageStore = create<HeritageState>((set, get) => ({
 
         set({filteredHeritages: filtered});
     },
+    selectHeritage: async (id: string) => {
+        set({loading: true});
+        try {
+            const heritage = await heritageService.getHeritageById(id);
+            set({
+                selectedHeritage: heritage,
+                loading: false,
+                error: null
+            });
+        } catch (error) {
+            set({
+                error: '加载遗产详情失败',
+                loading: false
+            });
+        }
+    }
 })); 

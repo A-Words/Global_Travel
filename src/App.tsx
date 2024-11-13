@@ -12,6 +12,7 @@ import VirtualTour from './pages/VirtualTour';
 import ModelPreview from './pages/ModelPreview';
 import DebugPage from './pages/DebugPage';
 import Destinations from './pages/Destinations';
+import HeritageDetail from './pages/HeritageDetail';
 
 const { Content } = Layout;
 
@@ -63,6 +64,7 @@ const App: React.FC = () => {
                             <Route path="/model-preview" element={<ModelPreview />} />
                             <Route path="/debug" element={<DebugPage />} />
                             <Route path="/destinations" element={<Destinations/>}/>
+                            <Route path="/heritage/:id" element={<HeritageDetail/>}/>
                         </Routes>
                     </Content>
                     <Button
