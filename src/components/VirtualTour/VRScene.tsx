@@ -1,6 +1,6 @@
-import { FC, useEffect, useRef, useState } from 'react';
-import { Engine, Scene, ArcRotateCamera, Vector3, PhotoDome, PointerEventTypes } from '@babylonjs/core';
-import { message } from 'antd';
+import {FC, useEffect, useRef, useState} from 'react';
+import type {ArcRotateCamera, Engine, Scene} from '@babylonjs/core';
+import {message} from 'antd';
 import styles from './VirtualTour.module.css';
 
 interface VRSceneProps {
@@ -25,95 +25,105 @@ export const VRScene: FC<VRSceneProps> = ({ imageUrl, canvasRef }) => {
   useEffect(() => {
     if (!canvasRef.current) return;
 
-    try {
-      // 初始化引擎和场景
-      engineRef.current = new Engine(canvasRef.current, true);
-      sceneRef.current = new Scene(engineRef.current);
+    let cleanup: (() => void) | undefined;
 
-      // 设置相机
-      const camera = new ArcRotateCamera(
-        'camera',
-        0,
-        Math.PI / 2,
-        1,
-        Vector3.Zero(),
-        sceneRef.current
-      );
-      cameraRef.current = camera;
+    const initScene = async () => {
+      try {
+        // 动态导入所需模块
+        const BABYLON = await import('@babylonjs/core');
 
-      // 配置相机
-      camera.minZ = 0.1;
-      camera.fov = 1.0;
-      camera.wheelPrecision = 50;
-      camera.lowerBetaLimit = 0.1;
-      camera.upperBetaLimit = Math.PI - 0.1;
-      camera.inertia = 0;
-      camera.angularSensibilityX = 2000;
-      camera.angularSensibilityY = 2000;
-      camera.panningSensibility = 0;
+        // 初始化引擎和场景
+        engineRef.current = new BABYLON.Engine(canvasRef.current, true);
+        sceneRef.current = new BABYLON.Scene(engineRef.current);
 
-      // 创建全景图
-      const photoDome = new PhotoDome(
-        'photoDome',
-        imageUrl,
-        {
-          resolution: 32,
-          size: 1000
-        },
-        sceneRef.current
-      );
+        // 设置相机
+        const camera = new BABYLON.ArcRotateCamera(
+            'camera',
+            0,
+            Math.PI / 2,
+            1,
+            BABYLON.Vector3.Zero(),
+            sceneRef.current
+        );
+        cameraRef.current = camera;
 
-      // 监听全景图加载完成事件
-      photoDome.onReady = () => {
-        showMessage('success', '全景加载成功');
-      };
+        // 配置相机
+        camera.minZ = 0.1;
+        camera.fov = 1.0;
+        camera.wheelPrecision = 50;
+        camera.lowerBetaLimit = 0.1;
+        camera.upperBetaLimit = Math.PI - 0.1;
+        camera.inertia = 0;
+        camera.angularSensibilityX = 2000;
+        camera.angularSensibilityY = 2000;
+        camera.panningSensibility = 0;
 
-      // 监听全景图加载失败事件
-      photoDome.onLoadErrorObservable.add((error) => {
-        console.error('全景加载失败:', error);
-        showMessage('error', '全景加载失败');
-      });
+        // 创建全景图
+        const photoDome = new BABYLON.PhotoDome(
+            'photoDome',
+            imageUrl,
+            {
+              resolution: 32,
+              size: 1000
+            },
+            sceneRef.current
+        );
 
-      // 添加场景事件监听
-      sceneRef.current.onPointerObservable.add((pointerInfo) => {
-        if (pointerInfo.type === PointerEventTypes.POINTERMOVE) {
-          const event = pointerInfo.event as PointerEvent;
-          
-          // 判断是否为触摸事件
-          const isTouchEvent = event.pointerType === 'touch';
-          const deltaX = event.movementX * (isTouchEvent ? 0.002 : 0.0004);
-          const deltaY = event.movementY * (isTouchEvent ? 0.002 : 0.0004);
-          
-          // 触摸事件不需要检查指针锁定
-          if (isTouchEvent || document.pointerLockElement) {
-            camera.alpha = camera.alpha - deltaX;
-            camera.beta = Math.max(
-              camera.lowerBetaLimit ?? 0.1,
-              Math.min(camera.upperBetaLimit ?? Math.PI - 0.1, camera.beta - deltaY)
-            );
+        // 监听全景图加载完成事件
+        photoDome.onReady = () => {
+          showMessage('success', '全景加载成功');
+        };
+
+        // 监听全景图加载失败事件
+        photoDome.onLoadErrorObservable.add((error) => {
+          console.error('全景加载失败:', error);
+          showMessage('error', '全景加载失败');
+        });
+
+        // 添加场景事件监听
+        sceneRef.current.onPointerObservable.add((pointerInfo) => {
+          if (pointerInfo.type === BABYLON.PointerEventTypes.POINTERMOVE) {
+            const event = pointerInfo.event as PointerEvent;
+
+            // 判断是否为触摸事件
+            const isTouchEvent = event.pointerType === 'touch';
+            const deltaX = event.movementX * (isTouchEvent ? 0.002 : 0.0004);
+            const deltaY = event.movementY * (isTouchEvent ? 0.002 : 0.0004);
+
+            // 触摸事件不需要检查指针锁定
+            if (isTouchEvent || document.pointerLockElement) {
+              camera.alpha = camera.alpha - deltaX;
+              camera.beta = Math.max(
+                  camera.lowerBetaLimit ?? 0.1,
+                  Math.min(camera.upperBetaLimit ?? Math.PI - 0.1, camera.beta - deltaY)
+              );
+            }
           }
-        }
-      });
+        });
 
-      // 渲染循环
-      engineRef.current.runRenderLoop(() => {
-        sceneRef.current?.render();
-      });
+        // 渲染循环
+        engineRef.current.runRenderLoop(() => {
+          sceneRef.current?.render();
+        });
 
-      // 响应窗口大小变化
-      window.addEventListener('resize', () => {
-        engineRef.current?.resize();
-      });
+        // 响应窗口大小变化
+        window.addEventListener('resize', () => {
+          engineRef.current?.resize();
+        });
 
-    } catch (error) {
-      console.error('场景初始化失败:', error);
-      showMessage('error', '场景初始化失败');
-    }
-
-    return () => {
-      engineRef.current?.dispose();
-      sceneRef.current?.dispose();
+        cleanup = () => {
+          engineRef.current?.dispose();
+          sceneRef.current?.dispose();
+        };
+      } catch (error) {
+        console.error('场景初始化失败:', error);
+        showMessage('error', '场景初始化失败');
+      }
     };
+
+    initScene();
+
+    return () => cleanup?.();
   }, [imageUrl]);
 
   useEffect(() => {
