@@ -72,6 +72,7 @@ html, body {
   --max-content-width: 1200px;
   --header-height: 64px;
   --footer-height: 70px;
+  --container-padding: 24px;
   
   /* 间距 */
   --spacing-xs: 8px;
@@ -79,6 +80,26 @@ html, body {
   --spacing-md: 24px;
   --spacing-lg: 32px;
   --spacing-xl: 48px;
+  
+  /* 字体大小 */
+  --font-size-xs: 12px;
+  --font-size-sm: 14px;
+  --font-size-base: 16px;
+  --font-size-lg: 18px;
+  --font-size-xl: 20px;
+  --font-size-xxl: 24px;
+  
+  /* 字重 */
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+  
+  /* 圆角 */
+  --border-radius-sm: 4px;
+  --border-radius-base: 6px;
+  --border-radius-lg: 8px;
+  --border-radius-xl: 12px;
   
   /* 断点 */
   --breakpoint-xs: 576px;
@@ -90,4 +111,15 @@ html, body {
   --transition-fast: 0.2s;
   --transition-base: 0.3s;
   --transition-slow: 0.4s;
+  --easing-base: cubic-bezier(0.645, 0.045, 0.355, 1);
+  --easing-in: cubic-bezier(0.55, 0.055, 0.675, 0.19);
+  --easing-out: cubic-bezier(0.215, 0.61, 0.355, 1);
+  
+  /* z-index 层级 */
+  --z-index-dropdown: 1000;
+  --z-index-sticky: 1020;
+  --z-index-fixed: 1030;
+  --z-index-modal: 1040;
+  --z-index-popover: 1050;
+  --z-index-tooltip: 1060;
 }

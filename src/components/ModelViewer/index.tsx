@@ -1,9 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Card, Button, Space, message, Tooltip } from 'antd';
+import { Button, Space, message, Tooltip } from 'antd';
 import { 
-  MobileOutlined, 
-  EyeOutlined, 
-  ZoomInOutlined, 
+  ZoomInOutlined,
   ZoomOutOutlined, 
   RotateRightOutlined,
   FullscreenOutlined
@@ -11,7 +9,6 @@ import {
 import * as THREE from 'three';
 import { Canvas } from '@react-three/fiber';
 import { OrbitControls, useGLTF } from '@react-three/drei';
-import ARModelViewer from './ARModelViewer';
 import styles from './ModelViewer.module.css';
 
 interface ModelViewerProps {
@@ -34,51 +31,11 @@ function Model({ url, onModelLoad }: { url: string; onModelLoad: (model: THREE.G
   return <primitive object={modelRef.current} />;
 }
 
-const ModelViewer: React.FC<ModelViewerProps> = ({ modelUrl, title }) => {
-  const [isARMode, setIsARMode] = useState(false);
+const ModelViewer: React.FC<ModelViewerProps> = ({ modelUrl }) => {
   const [isFullscreen, setIsFullscreen] = useState(false);
   const modelRef = useRef<THREE.Group>();
   const containerRef = useRef<HTMLDivElement>(null);
-  const [isARSupported, setIsARSupported] = useState(false);
   const [messageApi, contextHolder] = message.useMessage();
-
-  useEffect(() => {
-    const checkARSupport = async () => {
-      if ('xr' in navigator) {
-        try {
-          const supported = await (navigator as any).xr.isSessionSupported('immersive-ar');
-          setIsARSupported(supported);
-        } catch (error) {
-          setIsARSupported(false);
-        }
-      }
-    };
-    checkARSupport();
-  }, []);
-
-  const handleARView = async () => {
-    if (isARSupported) {
-      try {
-        const session = await (navigator as any).xr.requestSession('immersive-ar', {
-          requiredFeatures: ['hit-test'],
-          optionalFeatures: ['dom-overlay'],
-          domOverlay: { root: document.body }
-        });
-        
-        messageApi.success('AR 模式已启动');
-        setIsARMode(true);
-        
-        session.addEventListener('end', () => {
-          setIsARMode(false);
-          messageApi.info('已退出 AR 模式');
-        });
-      } catch (error) {
-        messageApi.error('AR 启动失败，请确保在支持的设备和浏览器中使用');
-      }
-    } else {
-      messageApi.error('您的设备不支持 AR 功能');
-    }
-  };
 
   const handleModelLoad = (model: THREE.Group) => {
     modelRef.current = model;
@@ -121,34 +78,8 @@ const ModelViewer: React.FC<ModelViewerProps> = ({ modelUrl, title }) => {
   return (
     <>
       {contextHolder}
-      <Card 
-        title={title || "3D 模型预览"} 
-        className={styles.modelViewer}
-        extra={
-            <Space>
-            <Button 
-              icon={<EyeOutlined />} 
-              type={!isARMode ? "primary" : "default"}
-              onClick={() => setIsARMode(false)}
-            >
-              3D 预览
-            </Button>
-            <Button 
-              icon={<MobileOutlined />}
-              type={isARMode ? "primary" : "default"}
-              onClick={handleARView}
-              disabled={!isARSupported}
-            >
-              AR 预览
-            </Button>
-          </Space>
-        }
-      >
         <div ref={containerRef} className={styles.viewerContainer}>
-          {isARMode ? (
-            <ARModelViewer modelUrl={modelUrl} />
-          ) : (
-            <Canvas camera={{ position: [5, 5, 5], fov: 50 }}>
+          <Canvas camera={{ position: [5, 5, 5], fov: 50 }}>
               <ambientLight intensity={0.8} />
               <directionalLight position={[5, 5, 5]} intensity={1.5} castShadow />
               <pointLight position={[-5, -5, -5]} intensity={0.5} />
@@ -159,8 +90,7 @@ const ModelViewer: React.FC<ModelViewerProps> = ({ modelUrl, title }) => {
                 enableRotate={true}
                 autoRotate={false}
               />
-            </Canvas>
-          )}
+          </Canvas>
           <div className={styles.controls}>
             <Space size={8}>
               <Tooltip title="放大" placement="top">
@@ -194,7 +124,6 @@ const ModelViewer: React.FC<ModelViewerProps> = ({ modelUrl, title }) => {
             </Space>
           </div>
         </div>
-      </Card>
     </>
   );
 };

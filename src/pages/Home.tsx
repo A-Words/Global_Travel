@@ -8,7 +8,7 @@ const { Title, Paragraph } = Typography;
 
 const Home: React.FC = () => {
   return (
-    <Content>
+    <Content className="home-content">
       {/* 英雄区域 */}
       <section className="hero">
         <div className="hero-content">

@@ -1,13 +1,21 @@
+:global(.ant-layout-content) {
+  margin-top: var(--header-height);
+}
+
 .modelViewer {
   width: 100%;
+  background: var(--ant-color-bg-layout);
+  min-height: calc(100vh - var(--header-height));
 }
 
 .viewerContainer {
   position: relative;
   height: 400px;
-  background: var(--ant-color-bg-layout);
-  border-radius: var(--ant-border-radius-lg);
+  background: var(--ant-color-bg-container);
+  border: 1px solid var(--ant-color-border);
+  border-radius: var(--border-radius-lg);
   overflow: hidden;
+  margin: var(--spacing-md);
 }
 
 .controls {
@@ -41,7 +49,7 @@
 }
 
 .viewerContainer canvas {
-  background: var(--ant-color-bg-layout);
+  background: var(--ant-color-bg-container);
   width: 100% !important;
   height: 100% !important;
 }
