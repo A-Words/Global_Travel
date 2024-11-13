@@ -1,10 +1,9 @@
 import { FC, useState, useRef, useEffect } from 'react';
-import { Layout, Card, Select, Button, Space, Typography, Row, Col, message, theme } from 'antd';
+import { Card, Select, Button, Space, Typography, Row, Col, message, theme } from 'antd';
 import { FullscreenOutlined, LoadingOutlined, ReloadOutlined } from '@ant-design/icons';
 import { VRScene } from '../components/VirtualTour/VRScene';
 import styles from '../components/VirtualTour/VirtualTour.module.css';
 
-const { Content } = Layout;
 const { Title } = Typography;
 
 const tourSpots = [
@@ -74,7 +73,7 @@ const VirtualTour: FC = () => {
   };
 
   return (
-    <Content className={styles.content}>
+    <div className={styles.content}>
       <Row gutter={[24, 24]}>
         <Col span={24}>
           <Card>
@@ -123,7 +122,7 @@ const VirtualTour: FC = () => {
           </Card>
         </Col>
       </Row>
-    </Content>
+    </div>
   );
 };
 

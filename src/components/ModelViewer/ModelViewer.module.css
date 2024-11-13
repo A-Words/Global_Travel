@@ -1,7 +1,3 @@
-:global(.ant-layout-content) {
-  margin-top: var(--header-height);
-}
-
 .modelViewer {
   width: 100%;
   background: var(--ant-color-bg-layout);
