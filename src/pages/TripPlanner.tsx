@@ -1,8 +1,9 @@
-import React, {useState} from 'react';
-import {Button, Card, DatePicker, InputNumber, Layout, message, Select, Space, Steps, Typography} from 'antd';
-import {CalendarOutlined, EnvironmentOutlined, RocketOutlined, TeamOutlined} from '@ant-design/icons';
+import React, {useEffect, useState} from 'react';
+import {Alert, Button, Card, DatePicker, InputNumber, Layout, message, Select, Space, Steps, Typography} from 'antd';
+import {CalendarOutlined, EnvironmentOutlined, ReloadOutlined, RocketOutlined, TeamOutlined} from '@ant-design/icons';
 import type {Dayjs} from 'dayjs';
 import styles from './TripPlanner.module.css';
+import {useHeritageStore} from '../stores/heritageStore';
 
 const {Content} = Layout;
 const {Title, Paragraph} = Typography;
@@ -16,6 +17,7 @@ interface TripPreference {
 }
 
 const TripPlanner: React.FC = () => {
+    const {loading: heritageLoading, error, fetchHeritages, filteredHeritages} = useHeritageStore();
     const [current, setCurrent] = useState(0);
     const [loading, setLoading] = useState(false);
     const [, setPreferences] = useState<TripPreference>({
@@ -24,6 +26,10 @@ const TripPlanner: React.FC = () => {
         travelers: 1,
         interests: []
     });
+
+    useEffect(() => {
+        fetchHeritages();
+    }, []);
 
     const handleGeneratePlan = async () => {
         setLoading(true);
@@ -40,17 +46,30 @@ const TripPlanner: React.FC = () => {
             icon: <EnvironmentOutlined/>,
             content: (
                 <Card>
-                    <Select
-                        mode="multiple"
-                        style={{width: '100%'}}
-                        placeholder="选择想要游览的文化遗产"
-                        onChange={(value) => setPreferences(prev => ({...prev, destinations: value}))}
-                        options={[
-                            {label: '长城', value: 'great-wall'},
-                            {label: '埃及金字塔', value: 'pyramids'},
-                            {label: '泰姬陵', value: 'taj-mahal'}
-                        ]}
-                    />
+                    {error ? (
+                        <Alert
+                            message="加载失败"
+                            description={error}
+                            type="error"
+                            action={
+                                <Button icon={<ReloadOutlined/>} onClick={() => fetchHeritages()}>
+                                    重试
+                                </Button>
+                            }
+                        />
+                    ) : (
+                        <Select
+                            mode="multiple"
+                            style={{width: '100%'}}
+                            placeholder="选择想要游览的文化遗产"
+                            onChange={(value) => setPreferences(prev => ({...prev, destinations: value}))}
+                            options={filteredHeritages.map(heritage => ({
+                                label: heritage.name,
+                                value: heritage.id
+                            }))}
+                            loading={heritageLoading}
+                        />
+                    )}
                 </Card>
             )
         },
