@@ -9,6 +9,7 @@ import {Header} from './components/Header';
 import {Footer} from './components/Footer';
 import Home from './pages/Home';
 import {Loading} from './components/Loading';
+import TripPlanner from './pages/TripPlanner';
 
 // 对登录注册组件进行懒加载
 const Login = React.lazy(() => import('./components/Login'));
@@ -75,6 +76,7 @@ const App: React.FC = () => {
                                 <Route path="/debug" element={<DebugPage/>}/>
                                 <Route path="/destinations" element={<Destinations/>}/>
                                 <Route path="/heritage/:id" element={<HeritageDetail/>}/>
+                                <Route path="/trip-planner" element={<TripPlanner/>}/>
                             </Routes>
                         </Suspense>
                     </Content>

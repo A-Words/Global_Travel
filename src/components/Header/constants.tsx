@@ -1,5 +1,5 @@
-import { Link } from 'react-router-dom';
-import type { MenuProps } from 'antd';
+import {Link} from 'react-router-dom';
+import type {MenuProps} from 'antd';
 
 // 定义菜单项类型
 type MenuItem = Required<MenuProps>['items'][number];
@@ -18,8 +18,8 @@ export const menuItems: MenuItem[] = [
         key: 'virtual-tour', 
         label: <Link to="/virtual-tour">VR体验</Link>
     },
-    { 
-        key: 'plan-trip', 
-        label: <Link to="/plan-trip">规划行程</Link>
+    {
+        key: 'trip-planner',
+        label: <Link to="/trip-planner">规划行程</Link>
     },
 ]; 

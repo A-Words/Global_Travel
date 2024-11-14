@@ -1,0 +1,79 @@
+.container {
+    padding: var(--spacing-md);
+    min-height: calc(100vh - var(--header-height) - var(--footer-height));
+}
+
+.header {
+    text-align: center;
+    margin-bottom: var(--spacing-lg);
+}
+
+.stepsContent {
+    min-height: 200px;
+    margin-top: 24px;
+    padding: 24px;
+    background-color: var(--ant-color-bg-container);
+    border: 1px dashed var(--ant-color-border);
+    border-radius: 8px;
+}
+
+.stepsAction {
+    margin-top: 24px;
+    display: flex;
+    justify-content: center;
+}
+
+/* 移动端样式适配 */
+@media (max-width: 768px) {
+    .container {
+        padding: var(--spacing-sm);
+    }
+
+    .stepsContent {
+        padding: 16px;
+    }
+
+    /* 自定义Steps组件在移动端的样式 */
+    :global(.ant-steps) {
+        display: flex;
+        justify-content: center;
+        flex-direction: row !important;
+        width: 100%;
+    }
+
+    :global(.ant-steps-item) {
+        flex: 1;
+        min-width: auto !important;
+        margin-right: 0 !important;
+        padding-inline: 8px !important;
+    }
+
+    :global(.ant-steps-item-container) {
+        text-align: center;
+    }
+
+    :global(.ant-steps-item-icon) {
+        margin: 0 auto 8px !important;
+    }
+
+    :global(.ant-steps-item-content) {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    :global(.ant-steps-item-title) {
+        padding-right: 0 !important;
+        font-size: 12px;
+        line-height: 1.2;
+    }
+
+    /* 隐藏所有连接线相关元素 */
+    :global(.ant-steps-item-tail),
+    :global(.ant-steps-item::after),
+    :global(.ant-steps-item::before),
+    :global(.ant-steps-item-tail::after),
+    :global(.ant-steps-item-title::after) {
+        display: none !important;
+    }
+}
