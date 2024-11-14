@@ -3,16 +3,22 @@ import {Button, ConfigProvider, Layout} from 'antd';
 import {BulbFilled, BulbOutlined} from '@ant-design/icons';
 import {BrowserRouter as Router, Route, Routes} from 'react-router-dom';
 import {defaultTheme, getDarkTheme} from './theme';
+
+// 直接导入首页组件
 import {Header} from './components/Header';
 import {Footer} from './components/Footer';
 import Home from './pages/Home';
-import Login from './components/Login';
-import Register from './components/Register';
-import VirtualTour from './pages/VirtualTour';
-import ModelPreview from './pages/ModelPreview';
-import DebugPage from './pages/DebugPage';
-import Destinations from './pages/Destinations';
-import HeritageDetail from './pages/HeritageDetail';
+
+// 对登录注册组件进行懒加载
+const Login = React.lazy(() => import('./components/Login'));
+const Register = React.lazy(() => import('./components/Register'));
+
+// 懒加载其他页面组件
+const VirtualTour = React.lazy(() => import('./pages/VirtualTour'));
+const ModelPreview = React.lazy(() => import('./pages/ModelPreview'));
+const Destinations = React.lazy(() => import('./pages/Destinations'));
+const HeritageDetail = React.lazy(() => import('./pages/HeritageDetail'));
+const DebugPage = React.lazy(() => import('./pages/DebugPage'));
 
 const { Content } = Layout;
 
