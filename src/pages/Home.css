@@ -1,0 +1,151 @@
+/* 重置样式 */
+#root {
+  width: 100%;
+  margin: 0;
+  text-align: left;
+}
+
+
+.home-content {
+  margin-top: 0 !important;
+}
+
+/* 英雄区域样式 */
+.hero {
+  height: 80vh;
+  background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
+              url('/assets/images/hero-bg.jpg') center/cover;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: var(--ant-color-white);
+  padding: 0 20px;
+}
+
+.hero-content {
+  max-width: 800px;
+}
+
+.hero h1 {
+  color: var(--ant-color-white) !important;
+  font-size: 3.5rem !important;
+  margin-bottom: 24px !important;
+  animation: fadeInDown 1s ease-out;
+}
+
+.hero .ant-typography {
+  color: var(--ant-color-white-secondary);
+  font-size: 1.2rem;
+  margin-bottom: 32px;
+  animation: fadeInUp 1s ease-out;
+}
+
+/* 特色功能区样式 */
+.features {
+  padding: var(--section-padding, 80px 20px);
+  background: var(--ant-color-bg-layout);
+}
+
+.feature-card {
+  text-align: center;
+  padding: 40px 20px;
+  height: 100%;
+  transition: all 0.3s ease;
+}
+
+.feature-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 24px var(--ant-color-shadow);
+}
+
+.feature-icon {
+  font-size: 48px;
+  color: var(--ant-primary-color);
+  margin-bottom: 24px;
+  transition: transform 0.3s ease;
+}
+
+.feature-card:hover .feature-icon {
+  transform: scale(1.1);
+}
+
+/* 热门目的地样式 */
+.destinations {
+  padding: var(--section-padding, 80px 20px);
+}
+
+.section-title {
+  text-align: center;
+  margin-bottom: 48px !important;
+}
+
+.destination-card {
+  overflow: hidden;
+}
+
+.destination-image {
+  height: 200px;
+  background-size: cover;
+  background-position: center;
+  transition: transform 0.3s ease;
+}
+
+.destination-card:hover .destination-image {
+  transform: scale(1.1);
+}
+
+/* 为不同目的地设置背景图片 */
+.destination-image[data-site="长城"] {
+  background-image: url('/assets/images/great-wall.jpg');
+}
+
+.destination-image[data-site="埃及金字塔"] {
+  background-image: url('/assets/images/pyramids.jpg');
+}
+
+.destination-image[data-site="泰姬陵"] {
+  background-image: url('/assets/images/taj-mahal.jpg');
+}
+
+.destination-image[data-site="圣家族大教堂"] {
+  background-image: url('/assets/images/sagrada-familia.jpg');
+}
+
+/* 动画效果 */
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* 响应式适配 */
+@media (max-width: 768px) {
+  :root {
+    --section-padding: 40px 20px;
+  }
+  
+  .hero h1 {
+    font-size: 2.5rem !important;
+  }
+  
+  .hero .ant-typography {
+    font-size: 1rem;
+  }
+}
