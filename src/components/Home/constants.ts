@@ -25,7 +25,7 @@ export const DESTINATIONS: Destination[] = [
     {
         id: 'great-wall',
         name: '长城',
-        imageUrl: '/assets/images/great-wall.jpg',
+        imageUrl: '/assets/images/great-wall.webp',
         description: '点击开启VR之旅',
         hasVR: true,
         hasAR: true
@@ -33,14 +33,14 @@ export const DESTINATIONS: Destination[] = [
     {
         id: 'pyramids',
         name: '埃及金字塔',
-        imageUrl: '/assets/images/pyramids.jpg',
+        imageUrl: '/assets/images/pyramids.webp',
         description: '点击开启VR之旅',
         hasVR: true
     },
     {
         id: 'taj-mahal',
         name: '泰姬陵',
-        imageUrl: '/assets/images/taj-mahal.jpg',
+        imageUrl: '/assets/images/taj-mahal.webp',
         description: '点击开启VR之旅',
         hasVR: true,
         hasAR: true
@@ -48,7 +48,7 @@ export const DESTINATIONS: Destination[] = [
     {
         id: 'sagrada-familia',
         name: '圣家族大教堂',
-        imageUrl: '/assets/images/sagrada-familia.jpg',
+        imageUrl: '/assets/images/sagrada-familia.webp',
         description: '点击开启VR之旅',
         hasVR: true
     }
