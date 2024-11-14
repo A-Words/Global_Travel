@@ -1,6 +1,26 @@
 import React, {useEffect, useState} from 'react';
-import {Alert, Button, Card, DatePicker, InputNumber, Layout, message, Select, Space, Steps, Typography} from 'antd';
-import {CalendarOutlined, EnvironmentOutlined, ReloadOutlined, RocketOutlined, TeamOutlined} from '@ant-design/icons';
+import {
+    Alert,
+    Button,
+    Card,
+    DatePicker,
+    Empty,
+    InputNumber,
+    Layout,
+    message,
+    Select,
+    Space,
+    Steps,
+    Typography
+} from 'antd';
+import {
+    CalendarOutlined,
+    EnvironmentOutlined,
+    FileTextOutlined,
+    ReloadOutlined,
+    RocketOutlined,
+    TeamOutlined
+} from '@ant-design/icons';
 import type {Dayjs} from 'dayjs';
 import styles from './TripPlanner.module.css';
 import {useHeritageStore} from '../stores/heritageStore';
@@ -14,6 +34,12 @@ interface TripPreference {
     dateRange: [Dayjs | null, Dayjs | null] | null;
     travelers: number;
     interests: string[];
+}
+
+interface TripPlan {
+    id: string;
+    preferences: TripPreference;
+    plan: string;
 }
 
 interface DateRangeSelectorProps {
@@ -74,7 +100,8 @@ const TripPlanner: React.FC = () => {
     const {loading: heritageLoading, error, fetchHeritages, filteredHeritages} = useHeritageStore();
     const [current, setCurrent] = useState(0);
     const [loading, setLoading] = useState(false);
-    const [, setPreferences] = useState<TripPreference>({
+    const [plan, setPlan] = useState<TripPlan | null>(null);
+    const [preferences, setPreferences] = useState<TripPreference>({
         destinations: [],
         dateRange: null,
         travelers: 1,
@@ -86,12 +113,29 @@ const TripPlanner: React.FC = () => {
     }, []);
 
     const handleGeneratePlan = async () => {
-        setLoading(true);
-        // 模拟API调用
-        await new Promise(resolve => setTimeout(resolve, 2000));
-        setLoading(false);
-        message.success('行程规划生成成功！');
-        setCurrent(3);
+        try {
+            setLoading(true);
+            const response = await fetch('http://localhost:3000/api/trips/generate', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({preferences})
+            });
+
+            if (!response.ok) {
+                throw new Error('生成行程计划失败');
+            }
+
+            const data = await response.json();
+            setPlan(data);
+            message.success('行程规划生成成功！');
+            setCurrent(3);
+        } catch (error) {
+            message.error('生成行程计划失败，请重试');
+        } finally {
+            setLoading(false);
+        }
     };
 
     const steps = [
@@ -165,6 +209,34 @@ const TripPlanner: React.FC = () => {
                             {label: '宗教信仰', value: 'religion'}
                         ]}
                     />
+                </Card>
+            )
+        },
+        {
+            title: '行程预览',
+            icon: <FileTextOutlined/>,
+            content: (
+                <Card>
+                    {plan ? (
+                        <Space direction="vertical" size="large" style={{width: '100%'}}>
+                            <Alert
+                                message="行程生成成功"
+                                description="以下是为您定制的行程安排"
+                                type="success"
+                                showIcon
+                            />
+                            <Typography>
+                      <pre style={{
+                          whiteSpace: 'pre-wrap',
+                          wordWrap: 'break-word'
+                      }}>
+                        {plan.plan}
+                      </pre>
+                            </Typography>
+                        </Space>
+                    ) : (
+                        <Empty description="暂无行程计划"/>
+                    )}
                 </Card>
             )
         }
