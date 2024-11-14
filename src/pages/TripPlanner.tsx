@@ -16,6 +16,60 @@ interface TripPreference {
     interests: string[];
 }
 
+interface DateRangeSelectorProps {
+    setPreferences: React.Dispatch<React.SetStateAction<TripPreference>>;
+}
+
+const DateRangeSelector: React.FC<DateRangeSelectorProps> = ({setPreferences}) => {
+    const isMobile = window.innerWidth <= 768;
+
+    if (isMobile) {
+        return (
+            <Space direction="vertical" size="middle" style={{width: '100%'}}>
+                <DatePicker
+                    style={{width: '100%'}}
+                    placeholder="选择开始日期"
+                    onChange={(date) => {
+                        setPreferences(prev => ({
+                            ...prev,
+                            dateRange: [date, prev.dateRange?.[1] || null]
+                        }));
+                    }}
+                />
+                <DatePicker
+                    style={{width: '100%'}}
+                    placeholder="选择结束日期"
+                    onChange={(date) => {
+                        setPreferences(prev => ({
+                            ...prev,
+                            dateRange: [prev.dateRange?.[0] || null, date]
+                        }));
+                    }}
+                />
+            </Space>
+        );
+    }
+
+    return (
+        <RangePicker
+            style={{width: '100%'}}
+            onChange={(dates) => {
+                if (dates) {
+                    setPreferences(prev => ({
+                        ...prev,
+                        dateRange: [dates[0], dates[1]]
+                    }));
+                } else {
+                    setPreferences(prev => ({
+                        ...prev,
+                        dateRange: null
+                    }));
+                }
+            }}
+        />
+    );
+};
+
 const TripPlanner: React.FC = () => {
     const {loading: heritageLoading, error, fetchHeritages, filteredHeritages} = useHeritageStore();
     const [current, setCurrent] = useState(0);
@@ -79,10 +133,7 @@ const TripPlanner: React.FC = () => {
             content: (
                 <Card>
                     <Space direction="vertical" size="large" style={{width: '100%'}}>
-                        <RangePicker
-                            style={{width: '100%'}}
-                            onChange={(dates) => setPreferences(prev => ({...prev, dateRange: dates}))}
-                        />
+                        <DateRangeSelector setPreferences={setPreferences}/>
                         <Space>
                             <TeamOutlined/>
                             <span>出行人数：</span>
