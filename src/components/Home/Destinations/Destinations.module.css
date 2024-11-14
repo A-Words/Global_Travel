@@ -1,0 +1,30 @@
+.destinations {
+    padding: var(--section-padding, 80px 20px);
+}
+
+.sectionTitle {
+    text-align: center;
+    margin-bottom: 48px !important;
+}
+
+.destinationCard {
+    overflow: hidden;
+}
+
+.destinationImage {
+    height: 200px;
+    background-size: cover;
+    background-position: center;
+    transition: transform 0.3s ease;
+}
+
+.destinationCard:hover .destinationImage {
+    transform: scale(1.1);
+}
+
+/* 响应式适配 */
+@media (max-width: 768px) {
+    .destinations {
+        padding: var(--section-padding, 40px 20px);
+    }
+} 

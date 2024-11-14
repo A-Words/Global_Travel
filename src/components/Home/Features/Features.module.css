@@ -1,0 +1,34 @@
+.features {
+    padding: var(--section-padding, 80px 20px);
+    background: var(--ant-color-bg-layout);
+}
+
+.featureCard {
+    text-align: center;
+    padding: 40px 20px;
+    height: 100%;
+    transition: all 0.3s ease;
+}
+
+.featureCard:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 24px var(--ant-color-shadow);
+}
+
+.featureIcon {
+    font-size: 48px;
+    color: var(--ant-primary-color);
+    margin-bottom: 24px;
+    transition: transform 0.3s ease;
+}
+
+.featureCard:hover .featureIcon {
+    transform: scale(1.1);
+}
+
+/* 响应式适配 */
+@media (max-width: 768px) {
+    .features {
+        padding: var(--section-padding, 40px 20px);
+    }
+} 
