@@ -1,8 +1,9 @@
-import { FC, useState, useRef, useEffect } from 'react';
-import { Card, Select, Button, Space, Typography, Row, Col, message, theme } from 'antd';
-import { FullscreenOutlined, LoadingOutlined, ReloadOutlined } from '@ant-design/icons';
-import { VRScene } from '../components/VirtualTour/VRScene';
+import {FC, useEffect, useRef, useState} from 'react';
+import {Button, Card, Col, message, Row, Select, Space, theme, Typography} from 'antd';
+import {FullscreenOutlined, ReloadOutlined} from '@ant-design/icons';
+import {VRScene} from '../components/VirtualTour/VRScene';
 import styles from '../components/VirtualTour/VirtualTour.module.css';
+import {Loading} from '../components/Loading';
 
 const { Title } = Typography;
 
@@ -107,10 +108,7 @@ const VirtualTour: FC = () => {
                 className={styles.sceneContainer}
               >
                 {isLoading ? (
-                  <div className={styles.loading}>
-                    <LoadingOutlined />
-                    <span>场景加载中...</span>
-                  </div>
+                    <Loading tip="场景加载中..."/>
                 ) : (
                   <VRScene 
                     imageUrl={currentSpot} 

@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react';
 import {useNavigate, useParams} from 'react-router-dom';
-import {Alert, Button, Card, Col, Descriptions, Layout, Row, Space, Spin, Tag, Typography} from 'antd';
-import {ArrowLeftOutlined, EnvironmentOutlined, GlobalOutlined} from '@ant-design/icons';
+import {Alert, Button, Card, Col, Descriptions, Layout, Row, Space, Tag, Typography} from 'antd';
+import {ArrowLeftOutlined, EnvironmentOutlined, GlobalOutlined, LoadingOutlined} from '@ant-design/icons';
 import {useHeritageStore} from '../stores/heritageStore';
 import styles from './HeritageDetail.module.css';
 
@@ -22,7 +22,10 @@ const HeritageDetail: React.FC = () => {
     if (loading) {
         return (
             <div className={styles.loadingContainer}>
-                <Spin size="large" tip="加载中..."/>
+                <div className={styles.loading}>
+                    <LoadingOutlined/>
+                    <span>加载中...</span>
+                </div>
             </div>
         );
     }

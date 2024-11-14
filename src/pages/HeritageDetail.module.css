@@ -4,14 +4,6 @@
     margin: 0 auto;
 }
 
-.loadingContainer,
-.errorContainer {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 400px;
-}
-
 .backButton {
     margin-bottom: 16px;
 }

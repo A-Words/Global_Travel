@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {Suspense, useEffect, useState} from 'react';
 import {Button, ConfigProvider, Layout} from 'antd';
 import {BulbFilled, BulbOutlined} from '@ant-design/icons';
 import {BrowserRouter as Router, Route, Routes} from 'react-router-dom';
@@ -8,6 +8,7 @@ import {defaultTheme, getDarkTheme} from './theme';
 import {Header} from './components/Header';
 import {Footer} from './components/Footer';
 import Home from './pages/Home';
+import {Loading} from './components/Loading';
 
 // 对登录注册组件进行懒加载
 const Login = React.lazy(() => import('./components/Login'));
@@ -21,6 +22,8 @@ const HeritageDetail = React.lazy(() => import('./pages/HeritageDetail'));
 const DebugPage = React.lazy(() => import('./pages/DebugPage'));
 
 const { Content } = Layout;
+
+const LoadingComponent = () => <Loading tip="页面加载中..."/>;
 
 const App: React.FC = () => {
     const [isDarkMode, setIsDarkMode] = useState(() => {
@@ -62,16 +65,18 @@ const App: React.FC = () => {
                 <Layout style={{ minHeight: '100vh' }}>
                     <Header />
                     <Content>
-                        <Routes>
-                            <Route path="/" element={<Home />} />
-                            <Route path="/login" element={<Login />} />
-                            <Route path="/register" element={<Register />} />
-                            <Route path="/virtual-tour" element={<VirtualTour />} />
-                            <Route path="/model-preview" element={<ModelPreview />} />
-                            <Route path="/debug" element={<DebugPage />} />
-                            <Route path="/destinations" element={<Destinations/>}/>
-                            <Route path="/heritage/:id" element={<HeritageDetail/>}/>
-                        </Routes>
+                        <Suspense fallback={<LoadingComponent/>}>
+                            <Routes>
+                                <Route path="/" element={<Home/>}/>
+                                <Route path="/login" element={<Login/>}/>
+                                <Route path="/register" element={<Register/>}/>
+                                <Route path="/virtual-tour" element={<VirtualTour/>}/>
+                                <Route path="/model-preview" element={<ModelPreview/>}/>
+                                <Route path="/debug" element={<DebugPage/>}/>
+                                <Route path="/destinations" element={<Destinations/>}/>
+                                <Route path="/heritage/:id" element={<HeritageDetail/>}/>
+                            </Routes>
+                        </Suspense>
                     </Content>
                     <Button
                         type="text"

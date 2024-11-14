@@ -1,9 +1,10 @@
 import React, {useEffect} from 'react';
-import {Alert, Button, Card, Col, Input, Layout, Row, Select, Space, Spin, Tag, Typography} from 'antd';
+import {Alert, Button, Card, Col, Input, Layout, Row, Select, Space, Tag, Typography} from 'antd';
 import {EnvironmentOutlined, GlobalOutlined, ReloadOutlined, SearchOutlined} from '@ant-design/icons';
 import {useNavigate} from 'react-router-dom';
 import {useHeritageStore} from '../stores/heritageStore';
 import styles from './Destinations.module.css';
+import {Loading} from '../components/Loading';
 
 const {Content} = Layout;
 const {Title, Paragraph} = Typography;
@@ -20,11 +21,7 @@ const Destinations: React.FC = () => {
     }, []);
 
     if (loading) {
-        return (
-            <div className={styles.loadingContainer}>
-                <Spin size="large" tip="加载中..."/>
-            </div>
-        );
+        return <Loading tip="加载遗产信息..."/>;
     }
 
     if (error) {
