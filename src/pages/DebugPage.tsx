@@ -12,7 +12,7 @@ const DebugPage: React.FC = () => {
     const debugItems = [
         {
             title: '3D模型预览',
-            description: '测试3D模型加载和AR预览功能t',
+            description: '测试3D模型加载和AR预览功能',
             path: '/model-preview',
             icon: <EyeOutlined/>
         },
