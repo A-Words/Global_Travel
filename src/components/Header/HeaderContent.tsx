@@ -1,10 +1,12 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import { Button, Menu, Flex, Grid } from 'antd';
-import { MenuOutlined, UserOutlined } from '@ant-design/icons';
-import { menuItems } from './constants';
-import { AuthButtons } from './AuthButtons';
+import {Link} from 'react-router-dom';
+import {Button, Flex, Grid, Menu} from 'antd';
+import {MenuOutlined, UserOutlined} from '@ant-design/icons';
+import {menuItems} from './constants';
+import {AuthButtons} from './AuthButtons';
 import styles from './Header.module.css';
+import {UserAvatar} from './UserAvatar';
+import {useAuth} from '../../contexts/AuthContext';
 
 // 头部内容组件的属性类型
 interface HeaderContentProps {
@@ -17,31 +19,32 @@ export const HeaderContent: React.FC<HeaderContentProps> = ({
     onOpenDrawer, 
     onOpenModal 
 }) => {
+    const {isAuthenticated} = useAuth();
     const screens = Grid.useBreakpoint();
 
     return (
         <Flex align="center" className={styles.container}>
             {!screens.md ? (
-                // 移动端布局
                 <Flex align="center" justify="space-between" className={styles.mobileHeader}>
-                    {/* 左侧菜单按钮 */}
                     <Button
                         type="text"
                         icon={<MenuOutlined />}
                         onClick={onOpenDrawer}
                         className={styles.mobileMenuButton}
                     />
-                    {/* 中间 Logo */}
                     <Link to="/" className={styles.mobileLogo}>
                         TravelAR
                     </Link>
-                    {/* 右侧用户按钮 */}
-                    <Button
-                        type="text"
-                        icon={<UserOutlined />}
-                        onClick={() => onOpenModal('login')}
-                        className={styles.mobileMenuButton}
-                    />
+                    {isAuthenticated ? (
+                        <UserAvatar/>
+                    ) : (
+                        <Button
+                            type="text"
+                            icon={<UserOutlined/>}
+                            onClick={() => onOpenModal('login')}
+                            className={styles.mobileMenuButton}
+                        />
+                    )}
                 </Flex>
             ) : (
                 // 桌面端布局

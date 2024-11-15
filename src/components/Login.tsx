@@ -18,15 +18,12 @@ import {
     UserOutlined,
     WeiboCircleOutlined,
 } from '@ant-design/icons';
-import {
-    LoginForm,
-    ProConfigProvider,
-    ProFormCaptcha,
-    ProFormCheckbox,
-    ProFormText,
-} from '@ant-design/pro-components';
-import { Space, Tabs, message, Button } from 'antd';
-import { useState } from 'react';
+import {LoginForm, ProConfigProvider, ProFormCaptcha, ProFormCheckbox, ProFormText,} from '@ant-design/pro-components';
+import {Button, message, Space, Tabs} from 'antd';
+import {useState} from 'react';
+import {useNavigate} from 'react-router-dom';
+import axios from 'axios';
+import {useAuth} from '../contexts/AuthContext';
 
 type LoginType = 'account' | 'mail';
 
@@ -36,14 +33,48 @@ interface LoginProps {
 
 export default ({ onSwitchToRegister }: LoginProps) => {
     const [loginType, setLoginType] = useState<LoginType>('account');
+    const [loading, setLoading] = useState(false);
+    const navigate = useNavigate();
+    const {login} = useAuth();
+
+    const handleSubmit = async (values: any) => {
+        try {
+            setLoading(true);
+            let response;
+
+            if (loginType === 'account') {
+                response = await axios.post('http://localhost:3000/api/auth/login', {
+                    username: values.username,
+                    password: values.password
+                });
+            } else {
+                response = await axios.post('http://localhost:3000/api/auth/login-email', {
+                    email: values.mail,
+                    captcha: values.captcha
+                });
+            }
+
+            if (response.data.token) {
+                await login(response.data.token);
+                message.success('登录成功');
+                navigate('/');
+            }
+        } catch (error: any) {
+            message.error(error.response?.data?.message || '登录失败');
+        } finally {
+            setLoading(false);
+        }
+    };
 
     return (
         <ProConfigProvider hashed={false}>
             <div className="login-container">
                 <LoginForm
                     logo="https://github.githubassets.com/favicons/favicon.png"
-                    title="Github"
-                    subTitle="全球最大的代码托管平台"
+                    title="文化遗产在线"
+                    subTitle="探索世界文化遗产的新方式"
+                    onFinish={handleSubmit}
+                    loading={loading}
                     actions={
                         <Space>
                             其他登录方式

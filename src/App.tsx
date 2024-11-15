@@ -1,8 +1,9 @@
 import React, {Suspense, useEffect, useState} from 'react';
 import {Button, ConfigProvider, Layout} from 'antd';
 import {BulbFilled, BulbOutlined} from '@ant-design/icons';
-import {BrowserRouter as Router, Route, Routes} from 'react-router-dom';
+import {BrowserRouter as Router, Navigate, Route, Routes} from 'react-router-dom';
 import {defaultTheme, getDarkTheme} from './theme';
+import {AuthProvider, useAuth} from './contexts/AuthContext';
 
 // 直接导入首页组件
 import {Header} from './components/Header';
@@ -25,6 +26,10 @@ const DebugPage = React.lazy(() => import('./pages/DebugPage'));
 const { Content } = Layout;
 
 const LoadingComponent = () => <Loading tip="页面加载中..."/>;
+const PrivateRoute: React.FC<{ children: React.ReactNode }> = ({children}) => {
+    const {isAuthenticated} = useAuth();
+    return isAuthenticated ? <>{children}</> : <Navigate to="/login"/>;
+};
 
 const App: React.FC = () => {
     const [isDarkMode, setIsDarkMode] = useState(() => {
@@ -55,36 +60,44 @@ const App: React.FC = () => {
     };
 
     return (
-        <ConfigProvider
-            theme={{
-                ...defaultTheme,
-                ...(isDarkMode ? getDarkTheme() : {}),
-                cssVar: true,
-            }}
-        >
-            <Router>
-                <Layout style={{ minHeight: '100vh' }}>
-                    <Header />
-                    <Content>
-                        <Suspense fallback={<LoadingComponent/>}>
-                            <Routes>
-                                <Route path="/" element={<Home/>}/>
-                                <Route path="/login" element={<Login/>}/>
-                                <Route path="/register" element={<Register/>}/>
-                                <Route path="/virtual-tour" element={<VirtualTour/>}/>
-                                <Route path="/model-preview" element={<ModelPreview/>}/>
-                                <Route path="/debug" element={<DebugPage/>}/>
-                                <Route path="/destinations" element={<Destinations/>}/>
-                                <Route path="/heritage/:id" element={<HeritageDetail/>}/>
-                                <Route path="/trip-planner" element={<TripPlanner/>}/>
-                            </Routes>
-                        </Suspense>
-                    </Content>
-                    <Button
-                        type="text"
-                        icon={isDarkMode ? <BulbOutlined /> : <BulbFilled />}
-                        onClick={toggleTheme}
-                        style={{
+        <AuthProvider>
+            <ConfigProvider
+                theme={{
+                    ...defaultTheme,
+                    ...(isDarkMode ? getDarkTheme() : {}),
+                    cssVar: true,
+                }}
+            >
+                <Router>
+                    <Layout style={{minHeight: '100vh'}}>
+                        <Header/>
+                        <Content>
+                            <Suspense fallback={<LoadingComponent/>}>
+                                <Routes>
+                                    <Route path="/" element={<Home/>}/>
+                                    <Route path="/login" element={<Login/>}/>
+                                    <Route path="/register" element={<Register/>}/>
+                                    <Route path="/virtual-tour" element={<VirtualTour/>}/>
+                                    <Route path="/model-preview" element={<ModelPreview/>}/>
+                                    <Route path="/trip-planner" element={
+                                        <PrivateRoute>
+                                            <TripPlanner/>
+                                        </PrivateRoute>
+                                    }/>
+                                    <Route path="/destinations" element={<Destinations/>}/>
+                                    <Route path="/heritage/:id" element={<HeritageDetail/>}/>
+                                    {process.env.NODE_ENV === 'development' && (
+                                        <Route path="/debug" element={<DebugPage/>}/>
+                                    )}
+                                </Routes>
+                            </Suspense>
+                        </Content>
+                        {/* 主题切换按钮 */}
+                        <Button
+                            type="text"
+                            icon={isDarkMode ? <BulbOutlined/> : <BulbFilled/>}
+                            onClick={toggleTheme}
+                            style={{
                             position: 'fixed',
                             right: '20px',
                             bottom: '20px',
@@ -95,12 +108,13 @@ const App: React.FC = () => {
                             display: 'flex',
                             alignItems: 'center',
                             justifyContent: 'center',
-                        }}
-                    />
-                    <Footer />
-                </Layout>
-            </Router>
-        </ConfigProvider>
+                            }}
+                        />
+                        <Footer/>
+                    </Layout>
+                </Router>
+            </ConfigProvider>
+        </AuthProvider>
     );
 };
 

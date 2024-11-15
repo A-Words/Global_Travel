@@ -17,18 +17,12 @@
  * - 验证码：必填
  */
 
-import {
-  LockOutlined,
-  UserOutlined,
-  MailOutlined,
-} from '@ant-design/icons';
-import {
-  LoginForm,
-  ProConfigProvider,
-  ProFormText,
-  ProFormCaptcha,
-} from '@ant-design/pro-components';
-import { message, Button } from 'antd';
+import {LockOutlined, MailOutlined, UserOutlined,} from '@ant-design/icons';
+import {LoginForm, ProConfigProvider, ProFormCaptcha, ProFormText,} from '@ant-design/pro-components';
+import {Button, message} from 'antd';
+import {useState} from 'react';
+import {useNavigate} from 'react-router-dom';
+import axios from 'axios';
 import './login.css';
 
 interface RegisterProps {
@@ -36,19 +30,62 @@ interface RegisterProps {
 }
 
 const Register: React.FC<RegisterProps> = ({ onSwitchToLogin }) => {
+    const [loading, setLoading] = useState(false);
+    const navigate = useNavigate();
+
+    const handleSubmit = async (values: any) => {
+        try {
+            setLoading(true);
+            // 验证两次密码是否一致
+            if (values.password !== values.confirmPassword) {
+                message.error('两次输入的密码不一致！');
+                return;
+            }
+
+            const response = await axios.post('http://localhost:3000/api/auth/register', {
+                username: values.username,
+                email: values.email,
+                password: values.password,
+                captcha: values.captcha
+            });
+
+            if (response.data.token) {
+                localStorage.setItem('token', response.data.token);
+                message.success('注册成功');
+                navigate('/');
+            }
+        } catch (error: any) {
+            message.error(error.response?.data?.message || '注册失败');
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const handleGetCaptcha = async (email: string) => {
+        try {
+            await axios.post('http://localhost:3000/api/auth/send-captcha', {
+                email
+            });
+            message.success('验证码已发送到您的邮箱');
+        } catch (error: any) {
+            message.error(error.response?.data?.message || '验证码发送失败');
+        }
+    };
 
   return (
     <ProConfigProvider hashed={false}>
       <div className="login-container">
         <LoginForm
           logo="https://github.githubassets.com/favicons/favicon.png"
-          title="Github"
-          subTitle="全球最大的代码托管平台"
+          title="文化遗产在线"
+          subTitle="探索世界文化遗产的新方式"
           submitter={{
             searchConfig: {
               submitText: '注册',
             },
           }}
+          onFinish={handleSubmit}
+          loading={loading}
         >
           <ProFormText
             name="username"
@@ -108,9 +145,7 @@ const Register: React.FC<RegisterProps> = ({ onSwitchToLogin }) => {
                 message: '请输入验证码！',
               },
             ]}
-            onGetCaptcha={async () => {
-              message.success('获取验证码成功！验证码为：1234');
-            }}
+            onGetCaptcha={handleGetCaptcha}
           />
           <ProFormText.Password
             name="password"
