@@ -4,18 +4,48 @@ import {FullscreenOutlined, ReloadOutlined} from '@ant-design/icons';
 import {VRScene} from '../components/VirtualTour/VRScene';
 import styles from '../components/VirtualTour/VirtualTour.module.css';
 import {Loading} from '../components/Loading';
+import {useLocation} from 'react-router-dom';
 
 const { Title } = Typography;
 
-const tourSpots = [
-  { label: '长城', value: '/assets/panoramas/great-wall.jpg' },
-  { label: '埃及金字塔', value: '/assets/panoramas/pyramids.jpg' },
-  { label: '泰姬陵', value: '/assets/panoramas/taj-mahal.jpg' },
-  { label: '圣家族大教堂', value: '/assets/panoramas/sagrada-familia.jpg' },
-];
+type TourSpot = {
+  label: string;
+  value: string;
+};
+
+type TourSpots = {
+  [key: string]: TourSpot;
+};
+
+const tourSpots: TourSpots = {
+  'great-wall': {
+    label: '长城',
+    value: '/assets/panoramas/great-wall.jpg'
+  },
+  'pyramids': {
+    label: '埃及金字塔',
+    value: '/assets/panoramas/pyramids.jpg'
+  },
+  'taj-mahal': {
+    label: '泰姬陵',
+    value: '/assets/panoramas/taj-mahal.jpg'
+  },
+  'sagrada-familia': {
+    label: '圣家族大教堂',
+    value: '/assets/panoramas/sagrada-familia.jpg'
+  }
+};
 
 const VirtualTour: FC = () => {
-  const [currentSpot, setCurrentSpot] = useState(tourSpots[0].value);
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+  const siteId = searchParams.get('site');
+
+  const [currentSpot, setCurrentSpot] = useState(
+      siteId && tourSpots[siteId]
+          ? tourSpots[siteId].value
+          : tourSpots['great-wall'].value
+  );
   const [isLoading, setIsLoading] = useState(false);
   const [, setIsFullscreen] = useState(false);
   const sceneContainerRef = useRef<HTMLDivElement>(null);
@@ -32,9 +62,9 @@ const VirtualTour: FC = () => {
     });
   };
 
-  const handleSpotChange = (value: string) => {
+  const handleSpotChange = (heritageId: string) => {
     setIsLoading(true);
-    setCurrentSpot(value);
+    setCurrentSpot(tourSpots[heritageId].value);
     setTimeout(() => setIsLoading(false), 1000);
   };
 
@@ -83,14 +113,21 @@ const VirtualTour: FC = () => {
                 <Title level={4}>VR虚拟旅游</Title>
                 <Space>
                   <Select
-                    value={currentSpot}
+                      value={Object.keys(tourSpots).find(
+                          key => tourSpots[key].value === currentSpot
+                      )}
                     onChange={handleSpotChange}
-                    options={tourSpots}
+                      options={Object.entries(tourSpots).map(([id, spot]) => ({
+                        label: spot.label,
+                        value: id
+                      }))}
                     style={{ width: 200 }}
                   />
                   <Button 
                     icon={<ReloadOutlined />}
-                    onClick={() => handleSpotChange(currentSpot)}
+                    onClick={() => handleSpotChange(Object.keys(tourSpots).find(
+                        key => tourSpots[key].value === currentSpot
+                    ) || 'great-wall')}
                   >
                     重新加载
                   </Button>

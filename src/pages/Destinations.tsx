@@ -85,7 +85,10 @@ const Destinations: React.FC = () => {
                                         <Button
                                             type="link"
                                             icon={<GlobalOutlined/>}
-                                            onClick={() => navigate(`/virtual-tour?site=${heritage.id}`)}
+                                            onClick={(e) => {
+                                                e.stopPropagation();
+                                                navigate(`/virtual-tour?site=${heritage.id}`);
+                                            }}
                                         >
                                             VR体验
                                         </Button>
@@ -94,7 +97,10 @@ const Destinations: React.FC = () => {
                                         <Button
                                             type="link"
                                             icon={<EnvironmentOutlined/>}
-                                            onClick={() => navigate(`/model-preview?site=${heritage.id}`)}
+                                            onClick={(e) => {
+                                                e.stopPropagation();
+                                                navigate(`/model-preview?site=${heritage.id}`);
+                                            }}
                                         >
                                             AR预览
                                         </Button>
