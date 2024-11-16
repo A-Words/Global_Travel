@@ -1,6 +1,6 @@
 import React from 'react';
 import type {MenuProps} from 'antd';
-import {Avatar, Button, Dropdown, Flex} from 'antd';
+import {Avatar, Button, Dropdown, Flex, Grid} from 'antd';
 import {LogoutOutlined, SettingOutlined, UserOutlined} from '@ant-design/icons';
 import {useAuth} from '../../contexts/AuthContext';
 import {useNavigate} from 'react-router-dom';
@@ -8,6 +8,7 @@ import {useNavigate} from 'react-router-dom';
 export const UserAvatar: React.FC = () => {
     const {user, logout} = useAuth();
     const navigate = useNavigate();
+    const screens = Grid.useBreakpoint();
 
     const items: MenuProps['items'] = [
         {
@@ -39,7 +40,7 @@ export const UserAvatar: React.FC = () => {
                     >
                         {user?.username?.[0]?.toUpperCase()}
                     </Avatar>
-                    <span>{user?.username}</span>
+                    {screens.md && <span>{user?.username}</span>}
                 </Flex>
             </Button>
         </Dropdown>
