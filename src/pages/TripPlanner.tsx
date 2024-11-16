@@ -24,6 +24,8 @@ import {
 import type {Dayjs} from 'dayjs';
 import styles from './TripPlanner.module.css';
 import {useHeritageStore} from '../stores/heritageStore';
+import {useAuth} from '../contexts/AuthContext';
+import {useNavigate} from 'react-router-dom';
 
 const {Content} = Layout;
 const {Title, Paragraph} = Typography;
@@ -107,20 +109,33 @@ const TripPlanner: React.FC = () => {
         travelers: 1,
         interests: []
     });
+    const {isAuthenticated, user} = useAuth();
+    const navigate = useNavigate();
 
     useEffect(() => {
         fetchHeritages();
     }, []);
 
     const handleGeneratePlan = async () => {
+        if (!isAuthenticated) {
+            message.warning('请先登录后再生成行程');
+            navigate('/login');
+            return;
+        }
+
         try {
             setLoading(true);
+            const token = localStorage.getItem('token');
             const response = await fetch('http://localhost:3000/api/trips/generate', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
                 },
-                body: JSON.stringify({preferences})
+                body: JSON.stringify({
+                    preferences,
+                    userId: user?.id
+                })
             });
 
             if (!response.ok) {
@@ -129,7 +144,7 @@ const TripPlanner: React.FC = () => {
 
             const data = await response.json();
             setPlan(data);
-            message.success('行程规划生成成功！');
+            message.success('行程规划生成成功！已保存到您的账户');
             setCurrent(3);
         } catch (error) {
             message.error('生成行程计划失败，请重试');

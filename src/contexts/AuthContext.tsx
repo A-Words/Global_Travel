@@ -3,6 +3,7 @@ import axios from 'axios';
 
 interface AuthContextType {
     isAuthenticated: boolean;
+    loading: boolean;
     user: any;
     login: (token: string) => void;
     logout: () => void;
@@ -13,7 +14,7 @@ const AuthContext = createContext<AuthContextType>({} as AuthContextType);
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({children}) => {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [user, setUser] = useState(null);
-
+    const [loading,] = useState(true);
     useEffect(() => {
         const token = localStorage.getItem('token');
         if (token) {
@@ -43,7 +44,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({children}
     };
 
     return (
-        <AuthContext.Provider value={{isAuthenticated, user, login, logout}}>
+        <AuthContext.Provider value={{isAuthenticated, loading, user, login, logout}}>
             {children}
         </AuthContext.Provider>
     );

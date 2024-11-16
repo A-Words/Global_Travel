@@ -1,7 +1,7 @@
 import React from 'react';
 import type {MenuProps} from 'antd';
 import {Avatar, Button, Dropdown, Flex, Grid} from 'antd';
-import {LogoutOutlined, SettingOutlined, UserOutlined} from '@ant-design/icons';
+import {CompassOutlined, LogoutOutlined, SettingOutlined, UserOutlined} from '@ant-design/icons';
 import {useAuth} from '../../contexts/AuthContext';
 import {useNavigate} from 'react-router-dom';
 
@@ -11,6 +11,12 @@ export const UserAvatar: React.FC = () => {
     const screens = Grid.useBreakpoint();
 
     const items: MenuProps['items'] = [
+        {
+            key: 'trips',
+            label: '我的行程',
+            icon: <CompassOutlined/>,
+            onClick: () => navigate('/my-trips'),
+        },
         {
             key: 'settings',
             label: '个人设置',

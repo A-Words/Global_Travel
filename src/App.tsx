@@ -22,6 +22,7 @@ const ModelPreview = React.lazy(() => import('./pages/ModelPreview'));
 const Destinations = React.lazy(() => import('./pages/Destinations'));
 const HeritageDetail = React.lazy(() => import('./pages/HeritageDetail'));
 const DebugPage = React.lazy(() => import('./pages/DebugPage'));
+const MyTrips = React.lazy(() => import('./pages/MyTrips'));
 
 const { Content } = Layout;
 
@@ -79,13 +80,20 @@ const App: React.FC = () => {
                                     <Route path="/register" element={<Register/>}/>
                                     <Route path="/virtual-tour" element={<VirtualTour/>}/>
                                     <Route path="/model-preview" element={<ModelPreview/>}/>
+                                    <Route path="/destinations" element={<Destinations/>}/>
+                                    <Route path="/heritage/:id" element={<HeritageDetail/>}/>
                                     <Route path="/trip-planner" element={
                                         <PrivateRoute>
                                             <TripPlanner/>
                                         </PrivateRoute>
                                     }/>
-                                    <Route path="/destinations" element={<Destinations/>}/>
-                                    <Route path="/heritage/:id" element={<HeritageDetail/>}/>
+                                    <Route path="/my-trips" element={
+                                        <PrivateRoute>
+                                            <Suspense fallback={<LoadingComponent/>}>
+                                                <MyTrips/>
+                                            </Suspense>
+                                        </PrivateRoute>
+                                    }/>
                                     {process.env.NODE_ENV === 'development' && (
                                         <Route path="/debug" element={<DebugPage/>}/>
                                     )}
