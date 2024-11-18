@@ -33,7 +33,7 @@ export const HeaderContent: React.FC<HeaderContentProps> = ({
                         className={styles.mobileMenuButton}
                     />
                     <Link to="/" className={styles.mobileLogo}>
-                        TravelAR
+                        Traveler
                     </Link>
                     {isAuthenticated ? (
                         <UserAvatar/>
@@ -51,7 +51,7 @@ export const HeaderContent: React.FC<HeaderContentProps> = ({
                 <>
                     {/* Logo */}
                     <Link to="/" className={styles.logo}>
-                        TravelAR
+                        Traveler
                     </Link>
                     {/* 导航菜单和认证按钮 */}
                     <Flex align="center" gap="middle" flex={1}>

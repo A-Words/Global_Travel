@@ -21,6 +21,7 @@ export const UserAvatar: React.FC = () => {
             key: 'settings',
             label: '个人设置',
             icon: <SettingOutlined/>,
+            onClick: () => navigate('/settings'),
         },
         {
             type: 'divider',

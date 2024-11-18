@@ -23,6 +23,7 @@ const Destinations = React.lazy(() => import('./pages/Destinations'));
 const HeritageDetail = React.lazy(() => import('./pages/HeritageDetail'));
 const DebugPage = React.lazy(() => import('./pages/DebugPage'));
 const MyTrips = React.lazy(() => import('./pages/MyTrips'));
+const Settings = React.lazy(() => import('./pages/Settings'));
 
 const { Content } = Layout;
 
@@ -91,6 +92,13 @@ const App: React.FC = () => {
                                         <PrivateRoute>
                                             <Suspense fallback={<LoadingComponent/>}>
                                                 <MyTrips/>
+                                            </Suspense>
+                                        </PrivateRoute>
+                                    }/>
+                                    <Route path="/settings" element={
+                                        <PrivateRoute>
+                                            <Suspense fallback={<LoadingComponent/>}>
+                                                <Settings/>
                                             </Suspense>
                                         </PrivateRoute>
                                     }/>

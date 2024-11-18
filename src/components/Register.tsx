@@ -42,7 +42,7 @@ const Register: React.FC<RegisterProps> = ({ onSwitchToLogin }) => {
                 return;
             }
 
-            const response = await axios.post('http://localhost:3000/api/auth/register', {
+            const response = await axios.post('${config.API_BASE_URL}/auth/register', {
                 username: values.username,
                 email: values.email,
                 password: values.password,
@@ -63,7 +63,7 @@ const Register: React.FC<RegisterProps> = ({ onSwitchToLogin }) => {
 
     const handleGetCaptcha = async (email: string) => {
         try {
-            await axios.post('http://localhost:3000/api/auth/send-captcha', {
+            await axios.post('${config.API_BASE_URL}/auth/send-captcha', {
                 email
             });
             message.success('验证码已发送到您的邮箱');

@@ -20,19 +20,19 @@ type TourSpots = {
 const tourSpots: TourSpots = {
   'great-wall': {
     label: '长城',
-    value: '/assets/panoramas/great-wall.jpg'
+    value: '/assets/panoramas/great-wall.webp'
   },
   'pyramids': {
     label: '埃及金字塔',
-    value: '/assets/panoramas/pyramids.jpg'
+    value: '/assets/panoramas/pyramids.webp'
   },
   'taj-mahal': {
     label: '泰姬陵',
-    value: '/assets/panoramas/taj-mahal.jpg'
+    value: '/assets/panoramas/taj-mahal.webp'
   },
   'sagrada-familia': {
     label: '圣家族大教堂',
-    value: '/assets/panoramas/sagrada-familia.jpg'
+    value: '/assets/panoramas/sagrada-familia.webp'
   }
 };
 

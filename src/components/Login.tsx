@@ -43,12 +43,12 @@ export default ({ onSwitchToRegister }: LoginProps) => {
             let response;
 
             if (loginType === 'account') {
-                response = await axios.post('http://localhost:3000/api/auth/login', {
+                response = await axios.post('${config.API_BASE_URL}/auth/login', {
                     username: values.username,
                     password: values.password
                 });
             } else {
-                response = await axios.post('http://localhost:3000/api/auth/login-email', {
+                response = await axios.post('${config.API_BASE_URL}/auth/login-email', {
                     email: values.mail,
                     captcha: values.captcha
                 });
