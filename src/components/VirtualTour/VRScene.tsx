@@ -29,20 +29,25 @@ export const VRScene: FC<VRSceneProps> = ({ imageUrl, canvasRef }) => {
 
     const initScene = async () => {
       try {
-        // 动态导入所需模块
-        const BABYLON = await import('@babylonjs/core');
+          // 按需导入具体模块
+          const {Engine} = await import('@babylonjs/core/Engines/engine');
+          const {Scene} = await import('@babylonjs/core/scene');
+          const {ArcRotateCamera} = await import('@babylonjs/core/Cameras/arcRotateCamera');
+          const {Vector3} = await import('@babylonjs/core/Maths/math.vector');
+          const {PhotoDome} = await import('@babylonjs/core/Helpers/photoDome');
+          const {PointerEventTypes} = await import('@babylonjs/core/Events/pointerEvents');
 
         // 初始化引擎和场景
-        engineRef.current = new BABYLON.Engine(canvasRef.current, true);
-        sceneRef.current = new BABYLON.Scene(engineRef.current);
+          engineRef.current = new Engine(canvasRef.current, true);
+          sceneRef.current = new Scene(engineRef.current);
 
         // 设置相机
-        const camera = new BABYLON.ArcRotateCamera(
+          const camera = new ArcRotateCamera(
             'camera',
             0,
             Math.PI / 2,
             1,
-            BABYLON.Vector3.Zero(),
+              Vector3.Zero(),
             sceneRef.current
         );
         cameraRef.current = camera;
@@ -59,7 +64,7 @@ export const VRScene: FC<VRSceneProps> = ({ imageUrl, canvasRef }) => {
         camera.panningSensibility = 0;
 
         // 创建全景图
-        const photoDome = new BABYLON.PhotoDome(
+          const photoDome = new PhotoDome(
             'photoDome',
             imageUrl,
             {
@@ -82,7 +87,7 @@ export const VRScene: FC<VRSceneProps> = ({ imageUrl, canvasRef }) => {
 
         // 添加场景事件监听
         sceneRef.current.onPointerObservable.add((pointerInfo) => {
-          if (pointerInfo.type === BABYLON.PointerEventTypes.POINTERMOVE) {
+            if (pointerInfo.type === PointerEventTypes.POINTERMOVE) {
             const event = pointerInfo.event as PointerEvent;
 
             // 判断是否为触摸事件

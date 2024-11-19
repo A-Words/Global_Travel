@@ -1,5 +1,6 @@
 import {defineConfig} from 'vite';
 import react from '@vitejs/plugin-react';
+import path from 'path';
 
 export default defineConfig({
   plugins: [react()],
@@ -12,6 +13,7 @@ export default defineConfig({
   },
   resolve: {
     alias: {
+      '@': path.resolve(__dirname, './src'),
       'three': 'three',
       'three/examples/jsm': 'three/examples/jsm'
     }
@@ -24,8 +26,37 @@ export default defineConfig({
     rollupOptions: {
       output: {
         manualChunks: {
-          'vendor': ['react', 'react-dom', 'react-router-dom'],
-          'three': ['three']
+          'vendor': [
+            'react',
+            'react-dom',
+            'react-router-dom'
+          ],
+          'heritage': [
+            './src/stores/heritageStore',
+            './src/components/Home/constants'
+          ],
+          'auth': [
+            './src/contexts/AuthContext'
+          ],
+          'three': [
+            'three',
+            '@react-three/fiber',
+            '@react-three/drei'
+          ],
+          'antd': [
+            'antd'
+          ],
+          'ant-icons': [
+            '@ant-design/icons'
+          ],
+          'babylon-core': [
+            '@babylonjs/core/Engines/engine',
+            '@babylonjs/core/scene',
+            '@babylonjs/core/Cameras/arcRotateCamera',
+            '@babylonjs/core/Maths/math.vector',
+            '@babylonjs/core/Helpers/photoDome',
+            '@babylonjs/core/Events/pointerEvents'
+          ]
         }
       }
     }
