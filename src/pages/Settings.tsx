@@ -22,7 +22,7 @@ const Settings: React.FC = () => {
         try {
             setLoading(true);
             const token = localStorage.getItem('token');
-            const response = await fetch('${config.API_BASE_URL}/user/settings', {
+            const response = await fetch('/api/user/settings', {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
@@ -47,7 +47,7 @@ const Settings: React.FC = () => {
         try {
             setLoading(true);
             const token = localStorage.getItem('token');
-            const response = await fetch('${config.API_BASE_URL}/user/change-password', {
+            const response = await fetch('/api/user/change-password', {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
@@ -90,7 +90,7 @@ const Settings: React.FC = () => {
             formData.append('avatar', info.file.originFileObj as RcFile);
 
             try {
-                const response = await fetch('${config.API_BASE_URL}/user/avatar', {
+                const response = await fetch('/api/user/avatar', {
                     method: 'PUT',
                     headers: {
                         'Authorization': `Bearer ${token}`

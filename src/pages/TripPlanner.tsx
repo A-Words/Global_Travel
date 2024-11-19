@@ -126,7 +126,7 @@ const TripPlanner: React.FC = () => {
         try {
             setLoading(true);
             const token = localStorage.getItem('token');
-            const response = await fetch('${config.API_BASE_URL}/trips/generate', {
+            const response = await fetch('/api/trips/generate', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

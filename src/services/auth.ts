@@ -1,8 +1,7 @@
 import axios from 'axios';
-import {config} from '../config/config';
 
 export const login = async (username: string, password: string) => {
-    const response = await axios.post(`${config.API_BASE_URL}/login`, {
+    const response = await axios.post(`/api/login`, {
         username,
         password
     });
@@ -10,7 +9,7 @@ export const login = async (username: string, password: string) => {
 };
 
 export const register = async (username: string, email: string, password: string) => {
-    const response = await axios.post(`${config.API_BASE_URL}/register`, {
+    const response = await axios.post(`/api/register`, {
         username,
         email,
         password

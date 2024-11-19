@@ -29,7 +29,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({children}
         axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 
         try {
-            const response = await axios.get('${config.API_BASE_URL}/auth/me');
+            const response = await axios.get('/api/auth/me');
             setUser(response.data);
         } catch (error) {
             console.error('获取用户信息失败:', error);

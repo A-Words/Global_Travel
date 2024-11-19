@@ -10,16 +10,9 @@
  */
 
 import './login.css';
-import {
-    AlipayCircleOutlined,
-    LockOutlined,
-    MailOutlined,
-    TaobaoCircleOutlined,
-    UserOutlined,
-    WeiboCircleOutlined,
-} from '@ant-design/icons';
+import {LockOutlined, MailOutlined, UserOutlined,} from '@ant-design/icons';
 import {LoginForm, ProConfigProvider, ProFormCaptcha, ProFormCheckbox, ProFormText,} from '@ant-design/pro-components';
-import {Button, message, Space, Tabs} from 'antd';
+import {Button, message, Tabs} from 'antd';
 import {useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 import axios from 'axios';
@@ -43,12 +36,12 @@ export default ({ onSwitchToRegister }: LoginProps) => {
             let response;
 
             if (loginType === 'account') {
-                response = await axios.post('${config.API_BASE_URL}/auth/login', {
+                response = await axios.post('/api/auth/login', {
                     username: values.username,
                     password: values.password
                 });
             } else {
-                response = await axios.post('${config.API_BASE_URL}/auth/login-email', {
+                response = await axios.post('/api/auth/login-email', {
                     email: values.mail,
                     captcha: values.captcha
                 });
@@ -70,19 +63,19 @@ export default ({ onSwitchToRegister }: LoginProps) => {
         <ProConfigProvider hashed={false}>
             <div className="login-container">
                 <LoginForm
-                    logo="https://github.githubassets.com/favicons/favicon.png"
-                    title="文化遗产在线"
+                    //logo="https://github.githubassets.com/favicons/favicon.png"
+                    title="Traveler"
                     subTitle="探索世界文化遗产的新方式"
                     onFinish={handleSubmit}
                     loading={loading}
-                    actions={
-                        <Space>
-                            其他登录方式
-                            <AlipayCircleOutlined className="third-party-icon" />
-                            <TaobaoCircleOutlined className="third-party-icon" />
-                            <WeiboCircleOutlined className="third-party-icon" />
-                        </Space>
-                    }
+                    //actions={
+                    //<Space>
+                    //其他登录方式
+                    //<AlipayCircleOutlined className="third-party-icon" />
+                    //<TaobaoCircleOutlined className="third-party-icon" />
+                    //<WeiboCircleOutlined className="third-party-icon" />
+                    //</Space>
+                    //}
                 >
                     <Tabs
                         centered
@@ -100,7 +93,7 @@ export default ({ onSwitchToRegister }: LoginProps) => {
                                     size: 'large',
                                     prefix: <UserOutlined className={'prefixIcon'} />,
                                 }}
-                                placeholder={'用户名: admin or user'}
+                                placeholder={'用户名'}
                                 rules={[
                                     {
                                         required: true,
@@ -128,7 +121,7 @@ export default ({ onSwitchToRegister }: LoginProps) => {
                                         );
                                     },
                                 }}
-                                placeholder={'密码: ant.design'}
+                                placeholder={'密码'}
                                 rules={[
                                     {
                                         required: true,

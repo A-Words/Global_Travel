@@ -31,7 +31,7 @@ const MyTrips: React.FC = () => {
         const fetchTrips = async () => {
             try {
                 const token = localStorage.getItem('token');
-                const response = await fetch('${config.API_BASE_URL}/trips/my-trips', {
+                const response = await fetch('/api/trips/my-trips', {
                     headers: {
                         'Authorization': `Bearer ${token}`
                     }

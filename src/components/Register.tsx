@@ -42,7 +42,7 @@ const Register: React.FC<RegisterProps> = ({ onSwitchToLogin }) => {
                 return;
             }
 
-            const response = await axios.post('${config.API_BASE_URL}/auth/register', {
+            const response = await axios.post('/api/auth/register', {
                 username: values.username,
                 email: values.email,
                 password: values.password,
@@ -63,7 +63,7 @@ const Register: React.FC<RegisterProps> = ({ onSwitchToLogin }) => {
 
     const handleGetCaptcha = async (email: string) => {
         try {
-            await axios.post('${config.API_BASE_URL}/auth/send-captcha', {
+            await axios.post('/api/auth/send-captcha', {
                 email
             });
             message.success('验证码已发送到您的邮箱');
@@ -76,8 +76,8 @@ const Register: React.FC<RegisterProps> = ({ onSwitchToLogin }) => {
     <ProConfigProvider hashed={false}>
       <div className="login-container">
         <LoginForm
-          logo="https://github.githubassets.com/favicons/favicon.png"
-          title="文化遗产在线"
+            //logo="https://github.githubassets.com/favicons/favicon.png"
+            title="Traveler"
           subTitle="探索世界文化遗产的新方式"
           submitter={{
             searchConfig: {
