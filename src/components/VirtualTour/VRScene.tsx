@@ -55,24 +55,31 @@ export const VRScene: FC<VRSceneProps> = ({ imageUrl, canvasRef }) => {
         // 配置相机
         camera.minZ = 0.1;
         camera.fov = 1.0;
-        camera.wheelPrecision = 50;
+        camera.wheelPrecision = 100;
         camera.lowerBetaLimit = 0.1;
         camera.upperBetaLimit = Math.PI - 0.1;
-        camera.inertia = 0;
-        camera.angularSensibilityX = 2000;
-        camera.angularSensibilityY = 2000;
+        camera.inertia = 0;  // 移除惯性
+        camera.angularSensibilityX = 400;
+        camera.angularSensibilityY = 400;
         camera.panningSensibility = 0;
+        camera.speed = 4;
 
         // 创建全景图
           const photoDome = new PhotoDome(
             'photoDome',
             imageUrl,
             {
-              resolution: 32,
-              size: 1000
+              resolution: 64,  // 提高分辨率
+              size: 1000,
+              useDirectMapping: true,  // 使用直接映射提高性能
             },
             sceneRef.current
         );
+
+        // 设置场景优化选项
+        sceneRef.current.autoClear = false; // 禁用自动清除
+        sceneRef.current.autoClearDepthAndStencil = false;
+        sceneRef.current.skipFrustumClipping = true;
 
         // 监听全景图加载完成事件
         photoDome.onReady = () => {
@@ -86,18 +93,41 @@ export const VRScene: FC<VRSceneProps> = ({ imageUrl, canvasRef }) => {
         });
 
         // 添加场景事件监听
+        let lastTime = 0;
+        const moveThreshold = 16; // 约60fps的间隔
+        let lastDeltaX = 0;
+        let lastDeltaY = 0;
+        const maxDelta = 0.1; // 限制最大移动量
+        
         sceneRef.current.onPointerObservable.add((pointerInfo) => {
-            if (pointerInfo.type === PointerEventTypes.POINTERMOVE) {
+          if (pointerInfo.type === PointerEventTypes.POINTERMOVE) {
+            const currentTime = performance.now();
+            if (currentTime - lastTime < moveThreshold) {
+              return;
+            }
+            lastTime = currentTime;
+            
             const event = pointerInfo.event as PointerEvent;
-
-            // 判断是否为触摸事件
             const isTouchEvent = event.pointerType === 'touch';
-            const deltaX = event.movementX * (isTouchEvent ? 0.002 : 0.0004);
-            const deltaY = event.movementY * (isTouchEvent ? 0.002 : 0.0004);
+            const sensitivity = isTouchEvent ? 0.008 : 0.003;
 
-            // 触摸事件不需要检查指针锁定
+            // 计算移动增量
+            let deltaX = event.movementX * sensitivity;
+            let deltaY = event.movementY * sensitivity;
+
+            // 限制突变
+            deltaX = Math.max(-maxDelta, Math.min(maxDelta, deltaX));
+            deltaY = Math.max(-maxDelta, Math.min(maxDelta, deltaY));
+
+            // 平滑突变
+            deltaX = (deltaX + lastDeltaX) / 2;
+            deltaY = (deltaY + lastDeltaY) / 2;
+
+            lastDeltaX = deltaX;
+            lastDeltaY = deltaY;
+            
             if (isTouchEvent || document.pointerLockElement) {
-              camera.alpha = camera.alpha - deltaX;
+              camera.alpha -= deltaX;
               camera.beta = Math.max(
                   camera.lowerBetaLimit ?? 0.1,
                   Math.min(camera.upperBetaLimit ?? Math.PI - 0.1, camera.beta - deltaY)
@@ -108,7 +138,9 @@ export const VRScene: FC<VRSceneProps> = ({ imageUrl, canvasRef }) => {
 
         // 渲染循环
         engineRef.current.runRenderLoop(() => {
-          sceneRef.current?.render();
+          if (sceneRef.current && !sceneRef.current.isDisposed) {
+            sceneRef.current.render(true, true);
+          }
         });
 
         // 响应窗口大小变化
