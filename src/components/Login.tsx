@@ -14,11 +14,17 @@ import {LockOutlined, MailOutlined, UserOutlined,} from '@ant-design/icons';
 import {LoginForm, ProConfigProvider, ProFormCaptcha, ProFormCheckbox, ProFormText,} from '@ant-design/pro-components';
 import {Button, message, Tabs} from 'antd';
 import {useState} from 'react';
-import {useNavigate} from 'react-router-dom';
+import {useLocation, useNavigate} from 'react-router-dom';
 import axios from 'axios';
 import {useAuth} from '../contexts/AuthContext';
 
 type LoginType = 'account' | 'mail';
+
+interface LocationState {
+    from?: {
+        pathname: string;
+    };
+}
 
 interface LoginProps {
     onSwitchToRegister?: () => void;
@@ -30,6 +36,7 @@ export default ({onSwitchToRegister, onClose, redirectUrl}: LoginProps) => {
     const [loginType, setLoginType] = useState<LoginType>('account');
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
+    const location = useLocation();
     const {login} = useAuth();
 
     const handleSubmit = async (values: any) => {
@@ -53,7 +60,11 @@ export default ({onSwitchToRegister, onClose, redirectUrl}: LoginProps) => {
                 await login(response.data.token);
                 message.success('登录成功');
                 onClose?.();
-                navigate(redirectUrl || '/');
+
+                // 获取重定向路径
+                const state = location.state as LocationState;
+                const from = state?.from?.pathname || redirectUrl || '/';
+                navigate(from);
             }
         } catch (error: any) {
             message.error(error.response?.data?.message || '登录失败');

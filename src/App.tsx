@@ -1,7 +1,7 @@
 import React, {Suspense, useEffect, useState} from 'react';
 import {Button, ConfigProvider, Layout} from 'antd';
 import {BulbFilled, BulbOutlined} from '@ant-design/icons';
-import {BrowserRouter as Router, Navigate, Route, Routes} from 'react-router-dom';
+import {BrowserRouter as Router, Navigate, Route, Routes, useLocation} from 'react-router-dom';
 import {defaultTheme, getDarkTheme} from './theme';
 import {AuthProvider, useAuth} from './contexts/AuthContext';
 
@@ -30,7 +30,8 @@ const { Content } = Layout;
 const LoadingComponent = () => <Loading tip="页面加载中..."/>;
 const PrivateRoute: React.FC<{ children: React.ReactNode }> = ({children}) => {
     const {isAuthenticated} = useAuth();
-    return isAuthenticated ? <>{children}</> : <Navigate to="/login"/>;
+    const location = useLocation();
+    return isAuthenticated ? <>{children}</> : <Navigate to="/login" state={{from: location}} replace/>;
 };
 
 const App: React.FC = () => {
