@@ -1,5 +1,6 @@
 import React from 'react';
-import { Modal } from 'antd';
+import {Modal} from 'antd';
+import {useLocation} from 'react-router-dom';
 import Login from '../Login';
 import Register from '../Register';
 
@@ -16,6 +17,9 @@ export const HeaderModal: React.FC<HeaderModalProps> = ({
     onClose,
     onSwitchView
 }) => {
+    const location = useLocation();
+    const redirectUrl = location.pathname === '/login' ? '/' : location.pathname;
+
     return (
         <Modal
             title={currentView === 'login' ? "登录" : "注册"}
@@ -27,9 +31,17 @@ export const HeaderModal: React.FC<HeaderModalProps> = ({
             maskClosable={false}
         >
             {currentView === 'login' ? (
-                <Login onSwitchToRegister={() => onSwitchView('register')} />
+                <Login
+                    onSwitchToRegister={() => onSwitchView('register')}
+                    onClose={onClose}
+                    redirectUrl={redirectUrl}
+                />
             ) : (
-                <Register onSwitchToLogin={() => onSwitchView('login')} />
+                <Register
+                    onSwitchToLogin={() => onSwitchView('login')}
+                    onClose={onClose}
+                    redirectUrl={redirectUrl}
+                />
             )}
         </Modal>
     );

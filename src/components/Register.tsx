@@ -27,9 +27,11 @@ import './login.css';
 
 interface RegisterProps {
   onSwitchToLogin?: () => void;
+    onClose?: () => void;
+    redirectUrl?: string;
 }
 
-const Register: React.FC<RegisterProps> = ({ onSwitchToLogin }) => {
+const Register: React.FC<RegisterProps> = ({onSwitchToLogin, onClose, redirectUrl}) => {
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
 
@@ -52,7 +54,8 @@ const Register: React.FC<RegisterProps> = ({ onSwitchToLogin }) => {
             if (response.data.token) {
                 localStorage.setItem('token', response.data.token);
                 message.success('注册成功');
-                navigate('/');
+                onClose?.();
+                navigate(redirectUrl || '/');
             }
         } catch (error: any) {
             message.error(error.response?.data?.message || '注册失败');

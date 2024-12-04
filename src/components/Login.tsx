@@ -22,9 +22,11 @@ type LoginType = 'account' | 'mail';
 
 interface LoginProps {
     onSwitchToRegister?: () => void;
+    onClose?: () => void;
+    redirectUrl?: string;
 }
 
-export default ({ onSwitchToRegister }: LoginProps) => {
+export default ({onSwitchToRegister, onClose, redirectUrl}: LoginProps) => {
     const [loginType, setLoginType] = useState<LoginType>('account');
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
@@ -50,7 +52,8 @@ export default ({ onSwitchToRegister }: LoginProps) => {
             if (response.data.token) {
                 await login(response.data.token);
                 message.success('登录成功');
-                navigate('/');
+                onClose?.();
+                navigate(redirectUrl || '/');
             }
         } catch (error: any) {
             message.error(error.response?.data?.message || '登录失败');
