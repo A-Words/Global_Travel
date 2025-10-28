@@ -1,6 +1,6 @@
 /**
  * 注册组件
- * 
+ *
  * 功能：
  * 1. 用户名注册
  * 2. 邮箱验证
@@ -8,7 +8,7 @@
  * 4. 密码确认校验
  * 5. 验证码功能
  * 6. 支持切换到登录页面
- * 
+ *
  * 表单验证规则：
  * - 用户名：必填，至少3个字符
  * - 邮箱：必填，需要符合邮箱格式
@@ -18,7 +18,7 @@
  */
 
 import {LockOutlined, MailOutlined, UserOutlined,} from '@ant-design/icons';
-import {LoginForm, ProConfigProvider, ProFormCaptcha, ProFormText,} from '@ant-design/pro-components';
+import {LoginForm, ProConfigProvider, ProFormText,} from '@ant-design/pro-components';
 import {Button, message} from 'antd';
 import {useState} from 'react';
 import {useLocation, useNavigate} from 'react-router-dom';
@@ -75,17 +75,6 @@ const Register: React.FC<RegisterProps> = ({onSwitchToLogin, onClose, redirectUr
         }
     };
 
-    const handleGetCaptcha = async (email: string) => {
-        try {
-            await axios.post('/api/auth/send-captcha', {
-                email
-            });
-            message.success('验证码已发送到您的邮箱');
-        } catch (error: any) {
-            message.error(error.response?.data?.message || '验证码发送失败');
-        }
-    };
-
   return (
     <ProConfigProvider hashed={false}>
       <div className="login-container">
@@ -136,30 +125,6 @@ const Register: React.FC<RegisterProps> = ({onSwitchToLogin, onClose, redirectUr
                 message: '请输入有效的邮箱地址！',
               },
             ]}
-          />
-          <ProFormCaptcha
-            fieldProps={{
-              size: 'large',
-              prefix: <LockOutlined className={'prefixIcon'} />,
-            }}
-            captchaProps={{
-              size: 'large',
-            }}
-            placeholder="请输入验证码"
-            captchaTextRender={(timing, count) => {
-              if (timing) {
-                return `${count} ${'获取验证码'}`;
-              }
-              return '获取验证码';
-            }}
-            name="captcha"
-            rules={[
-              {
-                required: true,
-                message: '请输入验证码！',
-              },
-            ]}
-            onGetCaptcha={handleGetCaptcha}
           />
           <ProFormText.Password
             name="password"
@@ -220,7 +185,7 @@ const Register: React.FC<RegisterProps> = ({onSwitchToLogin, onClose, redirectUr
             ]}
           />
           <div className="switch-form-container">
-            已有账号？ 
+            已有账号？
             <Button type="link" onClick={onSwitchToLogin}>
               立即登录
             </Button>

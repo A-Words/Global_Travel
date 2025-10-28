@@ -1,6 +1,6 @@
 /**
  * 登录组件
- * 
+ *
  * 功能：
  * 1. 支持账号密码登录
  * 2. 支持邮箱验证码登录
@@ -11,7 +11,7 @@
 
 import './login.css';
 import {LockOutlined, MailOutlined, UserOutlined,} from '@ant-design/icons';
-import {LoginForm, ProConfigProvider, ProFormCaptcha, ProFormCheckbox, ProFormText,} from '@ant-design/pro-components';
+import {LoginForm, ProConfigProvider, ProFormCheckbox, ProFormText,} from '@ant-design/pro-components';
 import {Button, message, Tabs} from 'antd';
 import {useState} from 'react';
 import {useLocation, useNavigate} from 'react-router-dom';
@@ -52,7 +52,7 @@ export default ({onSwitchToRegister, onClose, redirectUrl}: LoginProps) => {
             } else {
                 response = await axios.post('/api/auth/login-email', {
                     email: values.mail,
-                    captcha: values.captcha
+                    password: values.password
                 });
             }
 
@@ -121,19 +121,6 @@ export default ({onSwitchToRegister, onClose, redirectUrl}: LoginProps) => {
                                     size: 'large',
                                     prefix: <LockOutlined className="prefixIcon" />,
                                     strengthText: '密码应包含数字、字母和特殊字符，至少8个字符。',
-                                    statusRender: (value) => {
-                                        const getStatus = () => {
-                                            if (value && value.length > 12) return 'strong';
-                                            if (value && value.length > 6) return 'medium';
-                                            return 'weak';
-                                        };
-                                        const status = getStatus();
-                                        return (
-                                            <div className={`password-strength password-strength-${status}`}>
-                                                强度：{status === 'weak' ? '弱' : status === 'medium' ? '中' : '强'}
-                                            </div>
-                                        );
-                                    },
                                 }}
                                 placeholder={'密码'}
                                 rules={[
@@ -165,31 +152,20 @@ export default ({onSwitchToRegister, onClose, redirectUrl}: LoginProps) => {
                                     },
                                 ]}
                             />
-                            <ProFormCaptcha
+                            <ProFormText.Password
+                                name="password"
                                 fieldProps={{
                                     size: 'large',
-                                    prefix: <LockOutlined className={'prefixIcon'} />,
+                                    prefix: <LockOutlined className="prefixIcon"/>,
+                                    strengthText: '密码应包含数字、字母和特殊字符，至少8个字符。',
                                 }}
-                                captchaProps={{
-                                    size: 'large',
-                                }}
-                                placeholder={'请输入验证码'}
-                                captchaTextRender={(timing, count) => {
-                                    if (timing) {
-                                        return `${count} ${'获取验证码'}`;
-                                    }
-                                    return '获取验证码';
-                                }}
-                                name="captcha"
+                                placeholder={'密码'}
                                 rules={[
                                     {
                                         required: true,
-                                        message: '请输入验证码！',
+                                        message: '请输入密码！',
                                     },
                                 ]}
-                                onGetCaptcha={async () => {
-                                    message.success('获取验证码成功！验证码为：1234');
-                                }}
                             />
                         </>
                     )}
@@ -202,7 +178,7 @@ export default ({onSwitchToRegister, onClose, redirectUrl}: LoginProps) => {
                         </a>
                     </div>
                     <div className="switch-form-container">
-                        还没有账号？ 
+                        还没有账号？
                         <Button type="link" onClick={onSwitchToRegister}>
                             立即注册
                         </Button>
