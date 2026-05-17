@@ -17,14 +17,14 @@
     "@react-three/fiber": "^8.17.10",
     "@types/styled-components": "^5.1.34",
     "antd": "^5.21.6",
-    "axios": "^1.13.2",
+    "axios": "^1.15.2",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.20.3",
     "dotenv": "^16.4.5",
     "express": "^4.21.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "styled-components": "^6.1.13",
+    "styled-components": "^6.4.1",
     "three": "^0.170.0"
   },
   "devDependencies": {
@@ -43,13 +43,13 @@
     "eslint-plugin-react-refresh": "^0.4.14",
     "globals": "^15.11.0",
     "mysql2": "^3.11.4",
-    "postcss": "^8.4.47",
+    "postcss": "^8.5.14",
     "react-router-dom": "^6.28.0",
     "tailwindcss": "^3.4.14",
     "ts-node": "^10.9.2",
     "typescript": "^5.6.3",
     "typescript-eslint": "^8.11.0",
-    "vite": "^7.3.1"
+    "vite": "^7.3.3"
   },
   "description": "This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.",
   "main": "eslint.config.js",
